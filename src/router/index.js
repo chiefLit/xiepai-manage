@@ -45,7 +45,11 @@ export const constantRoutes = [
 
   {
     path: '/',
-    component: Layout,
+    redirect: '/order'
+  },
+
+  {
+    path: '/order',
     redirect: '/order/wash'
   },
 
@@ -60,7 +64,44 @@ export const constantRoutes = [
         path: 'all',
         name: 'orderWashAll',
         component: () => import('@/views/orderWash/orderList.all'),
-        meta: { title: '全部', icon: 'dashboard' }
+        meta: { title: '全部' }
+      },
+      {
+        path: 'waitCustomerPay',
+        name: 'orderWashWaitCustomerPay',
+        component: () => import('@/views/orderWash/orderList.waitCustomerPay'),
+        meta: { title: '待支付' }
+      },
+      {
+        path: 'waitCustomerSend',
+        name: 'orderWashWaitCustomerSend',
+        component: () => import('@/views/orderWash/orderList.waitCustomerSend'),
+        meta: { title: '待客户寄鞋' }
+      },
+      {
+        path: 'waitReceipt',
+        name: 'orderWashWaitReceipt',
+        component: () => import('@/views/orderWash/orderList.waitReceipt'),
+        meta: { title: '待接收' }
+      },
+      {
+        path: 'doWash',
+        name: 'orderWashDoWash',
+        component: () => import('@/views/orderWash/orderList.doWash'),
+        meta: { title: '处理中' }
+      },
+      {
+        path: 'waitCustomerReceipt',
+        name: 'orderWashWaitCustomerReceipt',
+        component: () => import('@/views/orderWash/orderList.waitCustomerReceipt'),
+        meta: { title: '待客户收鞋' }
+      },
+      {
+        path: 'detail',
+        name: 'orderWashDetail',
+        component: () => import('@/views/orderWash/orderDetail'),
+        meta: { title: '详情' },
+        hidden: true
       }
     ]
   },
