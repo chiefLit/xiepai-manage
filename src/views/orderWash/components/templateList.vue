@@ -67,7 +67,7 @@
       <el-table-column prop="phone" label="手机号码" />
       <el-table-column prop="channel" label="渠道">
         <template slot-scope="scope">
-          {{{1: '小程序',2: '官网',3: '线下'}[scope.row.channel]}}
+          {{channelToValue(scope.row.channel)}}
         </template>
       </el-table-column>
       <el-table-column prop="totalPrice" label="订单总价" />
@@ -75,7 +75,7 @@
       <el-table-column label="订单状态">
         <template slot-scope="scope">{{statusToValue(scope.row.status)}}</template>
       </el-table-column>
-      <el-table-column prop="address" label="操作">
+      <el-table-column prop="address" label="操作" width="80px">
         <template slot-scope="scope">
           <el-button type="text" @click="toDetail(scope.row)">查看</el-button>
         </template>
@@ -95,6 +95,10 @@ const statusToValue = status => {
     6: '寄回中', 7: '订单完成', 8: '退款中', 9: '已退款', '-1': '已取消', '-2': '已关闭'  }[status]
 }
 
+const channelToValue = channel => {
+  return {1: '小程序',2: '官网',3: '线下'}[channel]
+}
+
 export default {
   name: 'filter-search',
   props: {
@@ -105,6 +109,7 @@ export default {
   data() {
     return {
       statusToValue,
+      channelToValue,
       pageSizes: [20, 40, 80],
       totalRecords: 0,
       options: [{ name: 1, label: 'label' }],
