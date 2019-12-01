@@ -47,3 +47,10 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-input,
+.el-select,
+.el-date-editor.el-input {
+  width: 100%;
+}
+
