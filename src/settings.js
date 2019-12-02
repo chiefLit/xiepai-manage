@@ -1,7 +1,7 @@
 module.exports = {
   title: '管理后台',
 
-  tagsView: true,
+  tagsView: false,
 
   /**
    * @type {boolean} true | false

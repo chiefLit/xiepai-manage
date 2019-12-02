@@ -13,7 +13,52 @@ const data = Mock.mock({
         id: 1, //	int	子订单ID
         cartId: 2, //	int	购物车项ID
         goodzId: 1, //	int	商品ID
-        goodzTitle: '商品标题', //	string	商品标题
+        goodzTitle: '商品标题1', //	string	商品标题
+        goodzType: 0, //	int	商品类型 0：服务类 1：产品类
+        quantity: '', //	int	数量 暂时不用
+        price: '', //	double	单价 暂时不用
+        totalPrice: 1231.12, //	double	总价格
+        couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
+        couponDiscountAmount: 12.12, //	double	优惠券优惠金额
+        totalDiscountAmount: 12.12, //	double	总优惠金额
+        realPayPrice: 23.43, //	double	总优惠金额
+        serviceDetailList: [
+          {
+            serviceId: 1, //	int	服务项目ID
+            serviceName: '洗鞋', //	String	服务名称
+            price: '49' //	double	服务项目价格
+          },
+          {
+            serviceId: 2, //	int	服务项目ID
+            serviceName: '氧化', //	String	服务名称
+            price: '49' //	double	服务项目价格
+          },
+          {
+            serviceId: 3, //	int	服务项目ID
+            serviceName: '脱毛', //	String	服务名称
+            price: '49' //	double	服务项目价格
+          }
+        ], //	list	服务类订单 服务项目明细列表 由 serviceDetail 组成的List
+        serviceImageList: [
+          {
+            url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+            aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+          },
+          {
+            url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+            aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+          },
+          {
+            url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+            aspect: 2 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+          }
+        ] // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+      },
+      {
+        id: 1, //	int	子订单ID
+        cartId: 2, //	int	购物车项ID
+        goodzId: 1, //	int	商品ID
+        goodzTitle: '商品标题2', //	string	商品标题
         goodzType: 0, //	int	商品类型 0：服务类 1：产品类
         quantity: '', //	int	数量 暂时不用
         price: '', //	double	单价 暂时不用
@@ -151,7 +196,52 @@ export default [
               id: 1, //	int	子订单ID
               cartId: 2, //	int	购物车项ID
               goodzId: 1, //	int	商品ID
-              goodzTitle: '商品标题', //	string	商品标题
+              goodzTitle: '商品标题1', //	string	商品标题
+              goodzType: 0, //	int	商品类型 0：服务类 1：产品类
+              quantity: '', //	int	数量 暂时不用
+              price: '', //	double	单价 暂时不用
+              totalPrice: 1231.12, //	double	总价格
+              couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
+              couponDiscountAmount: 12.12, //	double	优惠券优惠金额
+              totalDiscountAmount: 12.12, //	double	总优惠金额
+              realPayPrice: 23.43, //	double	总优惠金额
+              serviceDetailList: [
+                {
+                  serviceId: 1, //	int	服务项目ID
+                  serviceName: '洗鞋', //	String	服务名称
+                  price: '49' //	double	服务项目价格
+                },
+                {
+                  serviceId: 2, //	int	服务项目ID
+                  serviceName: '氧化', //	String	服务名称
+                  price: '49' //	double	服务项目价格
+                },
+                {
+                  serviceId: 3, //	int	服务项目ID
+                  serviceName: '脱毛', //	String	服务名称
+                  price: '49' //	double	服务项目价格
+                }
+              ], //	list	服务类订单 服务项目明细列表 由 serviceDetail 组成的List
+              serviceImageList: [
+                {
+                  url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 0 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 2 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                }
+              ] // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+            },
+            {
+              id: 1, //	int	子订单ID
+              cartId: 2, //	int	购物车项ID
+              goodzId: 1, //	int	商品ID
+              goodzTitle: '商品标题2', //	string	商品标题
               goodzType: 0, //	int	商品类型 0：服务类 1：产品类
               quantity: '', //	int	数量 暂时不用
               price: '', //	double	单价 暂时不用
