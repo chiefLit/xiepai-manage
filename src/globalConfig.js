@@ -14,5 +14,5 @@ export function channelToValue(channel) {
 
 // 拍照
 export function aspectToValue(aspect) {
-  return { 0: '鞋子正面', 1: '鞋子背面', 2: '鞋子侧面', 3: '鞋子低面' }[aspect]
+  return { 0: '鞋子正面', 1: '鞋子背面', 2: '鞋子侧面', 3: '鞋子底面' }[aspect]
 }

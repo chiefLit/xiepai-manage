@@ -209,33 +209,93 @@ export default [
                 {
                   serviceId: 1, //	int	服务项目ID
                   serviceName: '洗鞋', //	String	服务名称
+                  classifyCode: '000001',
                   price: '49' //	double	服务项目价格
                 },
                 {
                   serviceId: 2, //	int	服务项目ID
                   serviceName: '氧化', //	String	服务名称
+                  classifyCode: '000002',
                   price: '49' //	double	服务项目价格
                 },
                 {
                   serviceId: 3, //	int	服务项目ID
                   serviceName: '脱毛', //	String	服务名称
+                  classifyCode: '000002',
                   price: '49' //	double	服务项目价格
                 }
               ], //	list	服务类订单 服务项目明细列表 由 serviceDetail 组成的List
               serviceImageList: [
                 {
                   url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
-                  aspect: 0 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
                 },
                 {
                   url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
-                  aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
                 },
                 {
                   url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
-                  aspect: 2 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
+                },
+                {
+                  url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
                 }
-              ] // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+              ], // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+              orderStoreCollectVo: {
+                id: 1, //	int	ID
+                orderId: 1, //	int	订单ID
+                orderSubId: 1, //	int	子订单ID
+                brand: '品牌', //	string	品牌
+                model: '系列', //	string	系列
+                amount: 1231.12, //	double	评估金额
+                remark: '备注备注备注备注备注备注备注备注' //	string	备注
+              }
             },
             {
               id: 1, //	int	子订单ID
@@ -270,17 +330,74 @@ export default [
               serviceImageList: [
                 {
                   url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
-                  aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
                 },
                 {
                   url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
-                  aspect: 1 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
                 },
                 {
                   url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
-                  aspect: 2 //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 0
+                },
+                {
+                  url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 1
+                },
+                {
+                  url: 'http://img3.imgtn.bdimg.com/it/u=1086323686,2139155&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 0, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=2684793832,4225520105&fm=26&gp=0.jpg', //	String	图片URL
+                  aspect: 1, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 2, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
+                },
+                {
+                  url: 'http://img5.imgtn.bdimg.com/it/u=3160151100,430019057&fm=11&gp=0.jpg', //	String	图片URL
+                  aspect: 3, //	int	球鞋展示面 鞋子展示面：0：正面 1：背后 2：侧面
+                  step: 2
                 }
-              ] // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+              ], // list	服务类订单 服务照片列表 由 serviceImage 组成的List
+              orderStoreCollectVo: {
+                id: 1, //	int	ID
+                orderId: 1, //	int	订单ID
+                orderSubId: 1, //	int	子订单ID
+                brand: '品牌', //	string	品牌
+                model: '系列', //	string	系列
+                amount: 1231.12, //	double	评估金额
+                remark: '备注备注备注备注备注备注备注备注' //	string	备注
+              }
             }
           ],
           totalPrice: 122.21,

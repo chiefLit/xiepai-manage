@@ -1,259 +1,57 @@
 <template>
   <div class="order-wash-detail">
-    <el-card class="module-card" header="基本信息" v-if="0" shadow="never">
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">订单编号</div>
-          <div class="wp70 value">{{data.number}}</div>
-        </el-col>
-      </el-row>
 
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">下单日期</div>
-          <div class="wp70 value">{{data.applyTime|parseTime}}</div>
-        </el-col>
-        <el-col :span="6">
-          <div class="wp30 name">渠道</div>
-          <div class="wp70 value">{{channelToValue(data.channel)}}</div>
-        </el-col>
-      </el-row>
+    <detailBaseInfo :data="dataBaseInfo" />
 
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">用户姓名</div>
-          <div class="wp70 value">{{data.phone}}</div>
-        </el-col>
-        <el-col :span="6">
-          <div class="wp30 name">手机号</div>
-          <div class="wp70 value">{{data.phone}}</div>
-        </el-col>
-      </el-row>
+    <detailOrderDetail :data="dataOrderDetail" />
 
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">订单状态</div>
-          <div class="wp70 value">{{statusToValue(data.status)}}</div>
-        </el-col>
-        <el-col :span="6">
-          <div class="wp30 name">订单关闭时间</div>
-          <div class="wp70 value">{{data.endTime|parseTime}}</div>
-        </el-col>
-      </el-row>
+    <detailExpressForm :data="dataExpressForm" />
 
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">收货人信息</div>
-        </el-col>
-      </el-row>
+    <detailShoesReceiveInfo :data="dataShoesReceive"/>
 
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">收货人姓名</div>
-          <div class="wp70 value">{{data.userAddressVo.linkName}}</div>
-        </el-col>
-        <el-col :span="6">
-          <div class="wp30 name">手机号码</div>
-          <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-        </el-col>
-      </el-row>
+    <detailShoesSendInfo :data="dataShoesSend"/>
 
-      <el-row :gutter="24">
-        <el-col :span="18">
-          <div class="wp10 name">详细地址</div>
-          <div class="wp70 value">{{data.userAddressVo.provinceName}} {{data.userAddressVo.cityName}} {{data.userAddressVo.countyName}} {{data.userAddressVo.address}}</div>
-        </el-col>
-      </el-row>
-
-    </el-card>
-
-    <el-card class="module-card" header="订单内容" v-if="0" shadow="never">
-      <el-tabs v-model="activeName" type="border-card" shadow="never">
-        <el-tab-pane v-for="(item, index) in data.orderSubVoList" :key="index" :label='item.goodzTitle'>
-          <el-card shadow="never">
-            <el-row :gutter="24">
-              <el-col :span="6">
-                <div class="wp30 name">清洗方式</div>
-                <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-              </el-col>
-              <el-col :span="6">
-                <div class="wp30 name">价格</div>
-                <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-              </el-col>
-            </el-row>
-            <el-row :gutter="24">
-              <el-col :span="6">
-                <div class="wp30 name">护理项目</div>
-              </el-col>
-            </el-row>
-            <el-row :gutter="24">
-              <el-col :span="24">
-                <div class="service-item" v-for="(sub, subIndex) in item.serviceDetailList" :key="subIndex">
-                  {{sub.serviceName}} {{sub.price}}
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="image-card-container" :gutter="24">
-              <el-card class="image-card" :body-style="{ padding: '0px' }" v-for="(sub, subIndex) in item.serviceImageList" :key="subIndex">
-                <el-image :src="sub.url" fit="cover" :preview-src-list="[sub.url]"></el-image>
-                <div style="padding: 14px;">
-                  <span>{{aspectToValue(sub.aspect)}}</span>
-                </div>
-              </el-card>
-            </el-row>
-          </el-card>
-
-        </el-tab-pane>
-      </el-tabs>
-      <el-card shadow="never">
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">收货人姓名</div>
-            <div class="wp70 value">{{data.userAddressVo.linkName}}</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">平台优惠</div>
-            <div class="wp70 value">{{data.userAddressVo.linkName}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">平台优惠说明</div>
-            <div class="wp70 value">--</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">优惠券</div>
-            <div class="wp70 value">{{data.couponAmount}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">平台钱包支付</div>
-            <div class="wp70 value">--</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">用户实际支付</div>
-            <div class="wp70 value">{{data.realPayPrice}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">支付订单号</div>
-            <div class="wp70 value">{{data.payOrderNumber}}</div>
-          </el-col>
-        </el-row>
-      </el-card>
-    </el-card>
-
-    <el-card class="module-card" header="物流信息" v-if="0" shadow="never">
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <div class="wp30 name">物流公司</div>
-          <div class="wp70 value">{{data.toStoreExpressName}}</div>
-        </el-col>
-        <el-col :span="6">
-          <div class="wp30 name">物流单号</div>
-          <div class="wp70 value">{{data.toStoreExpressNumber}}</div>
-        </el-col>
-      </el-row>
-      <div class="iframe-box">
-        <iframe src="https://wwww.baidu.com" height="500" width="100%"></iframe>
-      </div>
-    </el-card>
-
-    <el-card class="module-card" header="鞋子收货信息" shadow="never">
-      <el-tabs v-model="activeName" type="border-card" shadow="never">
-        <el-tab-pane v-for="(item, index) in data.orderSubVoList" :key="index" :label='item.goodzTitle'>
-          <el-card shadow="never">
-            <el-row :gutter="24">
-              <el-col :span="6">
-                <div class="wp30 name">鞋子品牌</div>
-                <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-              </el-col>
-              <el-col :span="6">
-                <div class="wp30 name">具体型号</div>
-                <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-              </el-col>
-            </el-row>
-            <el-row :gutter="24">
-              <el-col :span="6">
-                <div class="wp30 name">估算二手市场价</div>
-                <div class="wp70 value">{{data.userAddressVo.phone}}</div>
-              </el-col>
-            </el-row>
-            <el-row :gutter="24">
-              <el-col :span="24">
-                <div class="service-item" v-for="(sub, subIndex) in item.serviceDetailList" :key="subIndex">
-                  {{sub.serviceName}} {{sub.price}}
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="image-card-container" :gutter="24">
-              <el-card class="image-card" :body-style="{ padding: '0px' }" v-for="(sub, subIndex) in item.serviceImageList" :key="subIndex">
-                <el-image :src="sub.url" fit="cover" :preview-src-list="[sub.url]"></el-image>
-                <div style="padding: 14px;">
-                  <span>{{aspectToValue(sub.aspect)}}</span>
-                </div>
-              </el-card>
-            </el-row>
-          </el-card>
-        </el-tab-pane>
-      </el-tabs>
-      <el-card shadow="never">
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">收货人姓名</div>
-            <div class="wp70 value">{{data.userAddressVo.linkName}}</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">平台优惠</div>
-            <div class="wp70 value">{{data.userAddressVo.linkName}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">平台优惠说明</div>
-            <div class="wp70 value">--</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">优惠券</div>
-            <div class="wp70 value">{{data.couponAmount}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">平台钱包支付</div>
-            <div class="wp70 value">--</div>
-          </el-col>
-          <el-col :span="6">
-            <div class="wp30 name">用户实际支付</div>
-            <div class="wp70 value">{{data.realPayPrice}}</div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="6">
-            <div class="wp30 name">支付订单号</div>
-            <div class="wp70 value">{{data.payOrderNumber}}</div>
-          </el-col>
-        </el-row>
-      </el-card>
-    </el-card>
+    <detailExpressTo :data="dataExpressTo" />
+    
+    <detailOrderLogs :data="dataOrderLogs" />
   </div>
 </template>
 <script>
 import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
-
 import * as orderApi from '@/api/order'
+
+import detailBaseInfo from './components/detail/detailBaseInfo'
+import detailOrderDetail from './components/detail/detailOrderDetail'
+import detailExpressForm from './components/detail/detailExpressForm'
+import detailExpressTo from './components/detail/detailExpressTo'
+import detailOrderLogs from './components/detail/detailOrderLogs'
+import detailShoesReceiveInfo from './components/detail/detailShoesReceiveInfo'
+import detailShoesSendInfo from './components/detail/detailShoesSendInfo'
+
 export default {
+  components: { detailBaseInfo, detailOrderDetail, detailExpressForm, detailExpressTo, detailOrderLogs, detailShoesReceiveInfo, detailShoesSendInfo },
   data() {
     return {
       activeName: '',
       statusToValue,
       channelToValue,
       aspectToValue,
-      data: {
-        userAddressVo: {}
-      }
+      data: {},
+
+      dataBaseInfo: {},
+      dataOrderDetail: {},
+
+      // 收到快递信息
+      dataExpressForm: {},
+      // 送出快递信息
+      dataExpressTo: {},
+
+      // 收到后鞋子信息（洗之前）
+      dataShoesReceive: {},
+      // 送出前鞋子信息（洗了后）
+      dataShoesSend: {},
+
+      dataOrderLogs: [],
     }
   },
   beforeMount() {
@@ -265,8 +63,95 @@ export default {
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {
-        this.data = data.object
-        console.log(this.data)
+        this.data = data.object;
+        // 基础信息
+        this.dataBaseInfo = {
+          number: data.object.number,
+          applyTime: data.object.applyTime,
+          channel: data.object.channel,
+          phone: data.object.phone,
+          status: data.object.status,
+          endTime: data.object.endTime,
+          userAddressVo: { ...data.object.userAddressVo }
+        }
+
+        this.dataOrderDetail = {
+          orderSubVoList: [...data.object.orderSubVoList],
+          userAddressVo: { ...data.object.userAddressVo },
+          couponAmount: data.object.couponAmount,
+          realPayPrice: data.object.realPayPrice,
+          payOrderNumber: data.object.payOrderNumber
+        }
+
+        this.dataExpressForm = {
+          toStoreExpressName: data.object.toStoreExpressName,
+          toStoreExpressNumber: data.object.toStoreExpressNumber
+        }
+
+        this.dataExpressTo = {
+          toUserExpressName: data.object.toUserExpressName,
+          toUserExpressNumber: data.object.toUserExpressNumber
+        }
+
+        this.dataShoesReceive = {
+          orderId: data.object.id,
+          toUserExpressId: data.object.toUserExpressId,
+          toUserExpressNumber: data.object.toUserExpressNumber,
+          serviceResultSubParamList: data.object.orderSubVoList.map(ele => {
+            return {
+              // int	子订单ID
+              orderSubId: ele.id,
+              goodzTitle: ele.goodzTitle,
+              // string	品牌
+              brand: ele.orderStoreCollectVo.brand,
+              // string	系列
+              model: ele.orderStoreCollectVo.model,
+              // double	评估价
+              amount: ele.orderStoreCollectVo.amount,
+              // string	备注
+              remark: ele.orderStoreCollectVo.remark,
+              // string	正面照片
+              image0Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 0).url,
+              // string	背面照片
+              image1Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 1).url,
+              // string	侧面照片
+              image2Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 2).url,
+              // string	底面照片
+              image3Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 3).url,
+            }
+          })
+        }
+
+        this.dataShoesSend = {
+          orderId: data.object.id,
+          toUserExpressId: data.object.toUserExpressId,
+          toUserExpressNumber: data.object.toUserExpressNumber,
+          storeCollectSubParamList: data.object.orderSubVoList.map(ele => {
+            return {
+              // int	子订单ID
+              orderSubId: ele.id,
+              goodzTitle: ele.goodzTitle,
+              // string	品牌
+              brand: ele.orderStoreCollectVo.brand,
+              // string	系列
+              model: ele.orderStoreCollectVo.model,
+              // double	评估价
+              amount: ele.orderStoreCollectVo.amount,
+              // string	备注
+              remark: ele.orderStoreCollectVo.remark,
+              // string	正面照片
+              image0Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 0).url,
+              // string	背面照片
+              image1Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 1).url,
+              // string	侧面照片
+              image2Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 2).url,
+              // string	底面照片
+              image3Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 3).url,
+            }
+          })
+        }
+
+        this.dataOrderLogs = [...data.object.orderLogVos]
       }
     },
     handleClick() { }
@@ -286,9 +171,9 @@ export default {
       padding: 0;
     }
     .el-row {
-      border-bottom: 1px solid #ebeef5;
+      // border-bottom: 1px solid #ebeef5;
       > .el-col {
-        border-right: 1px solid #ebeef5;
+        // border-right: 1px solid #ebeef5;
         display: flex;
         line-height: 30px;
         font-size: 14px;
@@ -300,10 +185,12 @@ export default {
           min-width: 60px;
           font-weight: 500;
           min-width: 80px;
+          width: 120px;
         }
         .value {
           padding-left: 10px;
           color: #999;
+          display: flex;
         }
       }
     }
@@ -314,26 +201,19 @@ export default {
   .el-tabs--border-card {
     box-shadow: none;
   }
-  .service-item {
-    padding: 5px 15px;
-  }
-  .image-card-container {
+  /deep/ .image-card-container {
     display: flex;
     padding: 20px;
+    flex-wrap: wrap;
     .image-card {
       width: 200px;
+      min-width: 200px;
       margin-right: 20px;
+      margin-bottom: 10px
     }
     .el-image {
       width: 100%;
       height: 100px;
-    }
-  }
-
-  .iframe-box {
-    // padding: 5px 0px;
-    iframe {
-      border: 1px solid #ebeef5;
     }
   }
 }
