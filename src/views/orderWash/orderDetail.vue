@@ -14,10 +14,13 @@
     <detailExpressTo :data="dataExpressTo" />
 
     <div class="button-container">
-      <el-button type="danger">取消订单</el-button>
-      <el-button type="">确认已收到鞋子</el-button>
-      <el-button type="primary">清洗完成</el-button>
-      <el-button type="primary">订单完成</el-button>
+      <!-- 0: '待支付', 1: '等待物流信息', 2: '运输到店途中', 3: '到店核验中', 4: '清洗/修复中', 5: '清洗/修复完成',
+      6: '寄回中', 7: '订单完成', 8: '退款中', 9: '已退款', '-1': '已取消', '-2': '已关闭' -->
+
+      <el-button type="danger" @click="cancelOrder">取消订单</el-button>
+      <el-button @click="dialogVisible1=true">确认已收到鞋子</el-button>
+      <el-button type="primary" @click="dialogVisible2=true">清洗完成</el-button>
+      <el-button type="primary" @click="completeOrder">订单完成</el-button>
     </div>
 
     <detailOrderLogs :data="dataOrderLogs" />
@@ -59,7 +62,7 @@ export default {
   data() {
     return {
       dialogVisible1: false,
-      dialogVisible2: true,
+      dialogVisible2: false,
 
       activeName: '',
       statusToValue,
@@ -183,7 +186,22 @@ export default {
         this.dataOrderLogs = [...data.object.orderLogVos]
       }
     },
-    handleClick() { }
+    cancelOrder() {
+      this.$confirm('确定删除该订单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const data = await orderApi.orderCancel({ orderId: this.$route.query.id })
+        if (data.code !== 1) {
+          this.$message.error(data.message)
+        } else {
+          this.$message.success('订单已取消')
+          this.pulldata()
+        }
+      })
+    },
+    completeOrder() { },
   }
 }
 </script>
