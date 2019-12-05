@@ -7,13 +7,35 @@
 
     <detailExpressForm :data="dataExpressForm" />
 
-    <detailShoesReceiveInfo :data="dataShoesReceive"/>
+    <detailShoesReceiveInfo :data="dataShoesReceive" />
 
-    <detailShoesSendInfo :data="dataShoesSend"/>
+    <detailShoesSendInfo :data="dataShoesSend" />
 
     <detailExpressTo :data="dataExpressTo" />
-    
+
+    <div class="button-container">
+      <el-button type="danger">取消订单</el-button>
+      <el-button type="">确认已收到鞋子</el-button>
+      <el-button type="primary">清洗完成</el-button>
+      <el-button type="primary">订单完成</el-button>
+    </div>
+
     <detailOrderLogs :data="dataOrderLogs" />
+
+    <el-dialog title="确认收货" :visible.sync="dialogVisible1" width="80%">
+      <popupConfirmReceipt :data="dataOrderDetail" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1=false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible1=false">确认收鞋</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="确认完成" :visible.sync="dialogVisible2" width="80%">
+      <popupConfirmSend :data="dataOrderDetail" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible2=false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible2=false">确认完成</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -28,10 +50,17 @@ import detailOrderLogs from './components/detail/detailOrderLogs'
 import detailShoesReceiveInfo from './components/detail/detailShoesReceiveInfo'
 import detailShoesSendInfo from './components/detail/detailShoesSendInfo'
 
+import popupConfirmReceipt from './components/popup-confirmReceipt'
+import popupConfirmSend from './components/popup-confirmSend'
+
 export default {
-  components: { detailBaseInfo, detailOrderDetail, detailExpressForm, detailExpressTo, detailOrderLogs, detailShoesReceiveInfo, detailShoesSendInfo },
+  components: {    detailBaseInfo, detailOrderDetail, detailExpressForm, detailExpressTo, detailOrderLogs,
+    detailShoesReceiveInfo, detailShoesSendInfo, popupConfirmReceipt, popupConfirmSend  },
   data() {
     return {
+      dialogVisible1: false,
+      dialogVisible2: true,
+
       activeName: '',
       statusToValue,
       channelToValue,
@@ -168,7 +197,7 @@ export default {
       font-weight: bold;
     }
     .el-card__body {
-      padding: 0;
+      // padding: 0;
     }
     .el-row {
       // border-bottom: 1px solid #ebeef5;
@@ -177,9 +206,6 @@ export default {
         display: flex;
         line-height: 30px;
         font-size: 14px;
-        &.el-col-6 {
-          min-width: 320px;
-        }
         .name {
           text-align: right;
           min-width: 60px;
@@ -189,13 +215,21 @@ export default {
         }
         .value {
           padding-left: 10px;
-          color: #999;
+          color: #666;
           display: flex;
         }
       }
     }
-    .el-tabs__content {
-      padding: 0;
+    .el-tabs {
+      // border-bottom: 1px solid #ebeef5;
+      .el-tabs__header {
+        margin-bottom: 0;
+      }
+      .el-tabs__content {
+        padding: 0;
+        padding-top: 10px;
+        background: #eee;
+      }
     }
   }
   .el-tabs--border-card {
@@ -203,18 +237,30 @@ export default {
   }
   /deep/ .image-card-container {
     display: flex;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     flex-wrap: wrap;
     .image-card {
       width: 200px;
       min-width: 200px;
       margin-right: 20px;
-      margin-bottom: 10px
+      margin-bottom: 10px;
     }
     .el-image {
       width: 100%;
       height: 100px;
     }
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .el-button {
+      margin-right: 20px;
+    }
+  }
+
+  /deep/ .el-dialog__body {
+    padding: 0;
   }
 }
 </style>

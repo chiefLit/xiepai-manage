@@ -17,7 +17,7 @@
           <div class=" name">渠道</div>
           <div class=" value">{{channelToValue(data.channel)}}</div>
         </el-col>
-      <!-- </el-row>
+        <!-- </el-row>
 
       <el-row :gutter="20"> -->
         <el-col :span="6">
@@ -40,13 +40,7 @@
           <div class=" value">{{data.endTime|parseTime}}</div>
         </el-col>
       </el-row>
-
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <div class=" name">收货人信息</div>
-        </el-col>
-      </el-row>
-      
+      <el-divider content-position="left">收货信息</el-divider>
       <template v-if="data.userAddressVo">
         <el-row :gutter="20">
           <el-col :span="6">

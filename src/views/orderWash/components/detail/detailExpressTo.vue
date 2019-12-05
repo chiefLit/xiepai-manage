@@ -10,11 +10,7 @@
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <div class="wp30 name">收货地址</div>
-      </el-col>
-    </el-row>
+    <el-divider content-position="left">收货信息</el-divider>
     <el-row :gutter="20">
       <el-col :span="6">
         <div class="wp30 name">收货人姓名</div>
@@ -25,7 +21,7 @@
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
       <el-col :span="12">
-        <div class="wp30 name">详情地址</div>
+        <div class="wp30 name">详细地址</div>
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
     </el-row>

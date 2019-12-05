@@ -9,3 +9,16 @@ export function getExpressCompanyList() {
     method: 'post'
   })
 }
+
+/**
+ * 快递公司列表
+ */
+export function uploadFile(file, extData) {
+  const fd = new FormData()
+  for (const key in extData) {
+    fd.append(key, extData[key])
+  }
+  fd.append('timestamp', +new Date())
+  fd.append('file', file)
+  return request.post('/api/file/upload', fd)
+}
