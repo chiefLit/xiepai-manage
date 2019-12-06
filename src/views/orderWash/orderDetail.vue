@@ -5,40 +5,33 @@
 
     <detailOrderDetail :data="dataOrderDetail" />
 
-    <detailExpressForm :data="dataExpressForm" />
+    <detailExpressForm :data="dataExpressForm" v-if="[1,2,3,4,5,6,7,8,9,-2].some(ele => ele===data.status)" />
 
-    <detailShoesReceiveInfo :data="dataShoesReceive" />
+    <detailShoesReceiveInfo :data="dataShoesReceive" v-if="[4,5,6,7,8,9,-2].some(ele => ele===data.status)" />
 
-    <detailShoesSendInfo :data="dataShoesSend" />
+    <detailShoesSendInfo :data="dataShoesSend" v-if="[6,7,8,9,-2].some(ele => ele===data.status)" />
 
-    <detailExpressTo :data="dataExpressTo" />
+    <detailExpressTo :data="dataExpressTo" v-if="[6,7,8,9,-2].some(ele => ele===data.status)" />
 
     <div class="button-container">
       <!-- 0: '待支付', 1: '等待物流信息', 2: '运输到店途中', 3: '到店核验中', 4: '清洗/修复中', 5: '清洗/修复完成',
       6: '寄回中', 7: '订单完成', 8: '退款中', 9: '已退款', '-1': '已取消', '-2': '已关闭' -->
 
-      <el-button type="danger" @click="cancelOrder">取消订单</el-button>
+      <el-button type="danger" @click="cancelOrder" v-if="[0,1,2,3,4].some(ele => ele===data.status)">取消订单</el-button>
+      <el-button @click="dialogVisible1=true" v-if="[2].some(ele => ele===data.status)">确认已收到鞋子</el-button>
+      <el-button type="primary" @click="dialogVisible2=true" v-if="[4].some(ele => ele===data.status)">清洗完成</el-button>
+      <el-button type="primary" @click="completeOrder" v-if="[6].some(ele => ele===data.status)">订单完成</el-button>
+      <!-- <el-button type="danger" @click="cancelOrder">取消订单</el-button>
       <el-button @click="dialogVisible1=true">确认已收到鞋子</el-button>
       <el-button type="primary" @click="dialogVisible2=true">清洗完成</el-button>
-      <el-button type="primary" @click="completeOrder">订单完成</el-button>
+      <el-button type="primary" @click="completeOrder">订单完成</el-button> -->
     </div>
 
     <detailOrderLogs :data="dataOrderLogs" />
-
-    <el-dialog title="确认收货" :visible.sync="dialogVisible1" width="80%">
-      <popupConfirmReceipt :data="dataOrderDetail" />
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible1=false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible1=false">确认收鞋</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog title="确认完成" :visible.sync="dialogVisible2" width="80%">
-      <popupConfirmSend :data="dataOrderDetail" />
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible2=false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible2=false">确认完成</el-button>
-      </span>
-    </el-dialog>
+    <!-- 确认收鞋 -->
+    <popupConfirmReceipt v-model="dialogVisible1" :data="dataOrderDetail" />
+    <!-- 确认寄鞋 -->
+    <popupConfirmSend v-model="dialogVisible2" :data="dataOrderDetail" />
   </div>
 </template>
 <script>
@@ -72,17 +65,10 @@ export default {
 
       dataBaseInfo: {},
       dataOrderDetail: {},
-
-      // 收到快递信息
       dataExpressForm: {},
-      // 送出快递信息
       dataExpressTo: {},
-
-      // 收到后鞋子信息（洗之前）
       dataShoesReceive: {},
-      // 送出前鞋子信息（洗了后）
       dataShoesSend: {},
-
       dataOrderLogs: [],
     }
   },
@@ -107,7 +93,9 @@ export default {
           userAddressVo: { ...data.object.userAddressVo }
         }
 
+        // 订单详情
         this.dataOrderDetail = {
+          id: this.$route.query.id,
           orderSubVoList: [...data.object.orderSubVoList],
           userAddressVo: { ...data.object.userAddressVo },
           couponAmount: data.object.couponAmount,
@@ -115,74 +103,92 @@ export default {
           payOrderNumber: data.object.payOrderNumber
         }
 
-        this.dataExpressForm = {
-          toStoreExpressName: data.object.toStoreExpressName,
-          toStoreExpressNumber: data.object.toStoreExpressNumber
+        // 客户寄鞋快递
+        if ([1, 2, 3, 4, 5, 6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
+          if (data.object.status === -1 && !data.object.toStoreExpressNumber) return
+          this.dataExpressForm = {
+            id: this.$route.query.id,
+            toStoreExpressName: data.object.toStoreExpressName,
+            toStoreExpressNumber: data.object.toStoreExpressNumber
+          }
         }
 
-        this.dataExpressTo = {
-          toUserExpressName: data.object.toUserExpressName,
-          toUserExpressNumber: data.object.toUserExpressNumber
+        // 客户收鞋快递
+        if ([6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
+          if (data.object.status === -1 && !data.object.toUserExpressNumber) return
+          this.dataExpressTo = {
+            id: this.$route.query.id,
+            toUserExpressName: data.object.toUserExpressName,
+            toUserExpressNumber: data.object.toUserExpressNumber
+          }
         }
 
-        this.dataShoesReceive = {
-          orderId: data.object.id,
-          toUserExpressId: data.object.toUserExpressId,
-          toUserExpressNumber: data.object.toUserExpressNumber,
-          serviceResultSubParamList: data.object.orderSubVoList.map(ele => {
-            return {
-              // int	子订单ID
-              orderSubId: ele.id,
-              goodzTitle: ele.goodzTitle,
-              // string	品牌
-              brand: ele.orderStoreCollectVo.brand,
-              // string	系列
-              model: ele.orderStoreCollectVo.model,
-              // double	评估价
-              amount: ele.orderStoreCollectVo.amount,
-              // string	备注
-              remark: ele.orderStoreCollectVo.remark,
-              // string	正面照片
-              image0Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 0).url,
-              // string	背面照片
-              image1Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 1).url,
-              // string	侧面照片
-              image2Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 2).url,
-              // string	底面照片
-              image3Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 3).url,
-            }
-          })
+        // 收鞋后质检
+        if ([4, 5, 6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
+          if (data.object.status === -1) return
+          this.dataShoesReceive = {
+            orderId: data.object.id,
+            toUserExpressId: data.object.toUserExpressId,
+            toUserExpressNumber: data.object.toUserExpressNumber,
+            serviceResultSubParamList: data.object.orderSubVoList.map(ele => {
+              return {
+                // int	子订单ID
+                orderSubId: ele.id,
+                goodzTitle: ele.goodzTitle,
+                // string	品牌
+                brand: ele.orderStoreCollectVo.brand,
+                // string	系列
+                model: ele.orderStoreCollectVo.model,
+                // double	评估价
+                amount: ele.orderStoreCollectVo.amount,
+                // string	备注
+                remark: ele.orderStoreCollectVo.remark,
+                // string	正面照片
+                image0Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 0).url,
+                // string	背面照片
+                image1Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 1).url,
+                // string	侧面照片
+                image2Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 2).url,
+                // string	底面照片
+                image3Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 3).url,
+              }
+            })
+          }
         }
 
-        this.dataShoesSend = {
-          orderId: data.object.id,
-          toUserExpressId: data.object.toUserExpressId,
-          toUserExpressNumber: data.object.toUserExpressNumber,
-          storeCollectSubParamList: data.object.orderSubVoList.map(ele => {
-            return {
-              // int	子订单ID
-              orderSubId: ele.id,
-              goodzTitle: ele.goodzTitle,
-              // string	品牌
-              brand: ele.orderStoreCollectVo.brand,
-              // string	系列
-              model: ele.orderStoreCollectVo.model,
-              // double	评估价
-              amount: ele.orderStoreCollectVo.amount,
-              // string	备注
-              remark: ele.orderStoreCollectVo.remark,
-              // string	正面照片
-              image0Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 0).url,
-              // string	背面照片
-              image1Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 1).url,
-              // string	侧面照片
-              image2Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 2).url,
-              // string	底面照片
-              image3Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 3).url,
-            }
-          })
+        // 寄鞋前质检
+        if ([6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
+          if (data.object.status === -1) return
+          this.dataShoesSend = {
+            orderId: data.object.id,
+            toUserExpressId: data.object.toUserExpressId,
+            toUserExpressNumber: data.object.toUserExpressNumber,
+            storeCollectSubParamList: data.object.orderSubVoList.map(ele => {
+              return {
+                // int	子订单ID
+                orderSubId: ele.id,
+                goodzTitle: ele.goodzTitle,
+                // string	品牌
+                brand: ele.orderStoreCollectVo.brand,
+                // string	系列
+                model: ele.orderStoreCollectVo.model,
+                // double	评估价
+                amount: ele.orderStoreCollectVo.amount,
+                // string	备注
+                remark: ele.orderStoreCollectVo.remark,
+                // string	正面照片
+                image0Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 0).url,
+                // string	背面照片
+                image1Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 1).url,
+                // string	侧面照片
+                image2Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 2).url,
+                // string	底面照片
+                image3Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 3).url,
+              }
+            })
+          }
         }
-
+        // 订单日志
         this.dataOrderLogs = [...data.object.orderLogVos]
       }
     },
@@ -197,7 +203,7 @@ export default {
           this.$message.error(data.message)
         } else {
           this.$message.success('订单已取消')
-          this.pulldata()
+          this.pullData()
         }
       })
     },

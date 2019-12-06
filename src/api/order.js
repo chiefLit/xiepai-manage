@@ -59,3 +59,15 @@ export function orderCancel(params) {
     params
   })
 }
+
+/**
+ * 查看物流信息
+ * @param {orderId	是	int	订单ID, trend	是	int	走向 0：用户寄给门店 1：门店寄给用户} params 
+ */
+export function findOrderExpressLog(params) {
+  return request({
+    url: '/api/bgms/order/find-order-express-log',
+    method: 'post',
+    params
+  })
+}

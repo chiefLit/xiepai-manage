@@ -29,22 +29,22 @@
       </el-row>
 
       <el-row type="flex" align="top" justify="start" :gutter="24">
-        <el-col :span="6">
+        <el-col :span="6" v-if="!statusDisable">
           <el-form-item label="订单状态" prop="status">
             <el-select v-model="formParams.status" placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              <el-option v-for="item in orderOptions" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <!-- <el-col :span="6">
           <el-form-item label="门店" prop="storeName">
             <el-select v-model="formParams.storeName" placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col> -->
 
         <el-col :span="6">
           <el-button type="primary" icon="el-icon-search" @click="pulldata">搜索</el-button>
@@ -89,21 +89,25 @@
 
 <script>
 import * as orderApi from '@/api/order'
-import { statusToValue, channelToValue } from '@/globalConfig'
+import { statusToValue, channelToValue, orderOptions } from '@/globalConfig'
 
 export default {
   name: 'filter-search',
   props: {
-    downloadExcelUrl: {
-      type: String
+    status: {
+      type: String | Number
     }
   },
   data() {
     return {
       statusToValue,
       channelToValue,
+      orderOptions,
+
       pageSizes: [20, 40, 80],
       totalRecords: 0,
+      statusDisable: false,
+
       options: [{ name: 1, label: 'label' }],
       formParams: {
         startTime: null,
@@ -132,6 +136,10 @@ export default {
     }
   },
   beforeMount() {
+    if (this.status !== null && this.status !== undefined) {
+      this.formParams.status = this.status
+      this.statusDisable = true
+    }
     this.pulldata()
   },
   methods: {

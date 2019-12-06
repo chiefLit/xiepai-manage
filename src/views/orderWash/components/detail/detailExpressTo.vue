@@ -25,6 +25,7 @@
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
     </el-row>
+    <expressInfo :list="orderExpressLog" />
     <!-- <div class="iframe-box">
       <iframe src="https://wwww.baidu.com" height="500" width="100%"></iframe>
     </div> -->
@@ -32,7 +33,9 @@
 </template>
 <script>
 import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
+import expressInfo from './expressInfo'
 export default {
+  components: { expressInfo },
   props: {
     data: {
       type: Object,
@@ -43,9 +46,29 @@ export default {
     return {
       statusToValue,
       channelToValue,
-      aspectToValue
+      aspectToValue,
+
+      orderExpressLog
     }
   },
+  mounted() {
+    this.findOrderExpressLog()
+  },
+  methods: {
+    async findOrderExpressLog() {
+      // 走向 0：用户寄给门店 1：门店寄给用户
+      const data = await orderApi.findOrderExpressLog({
+        orderId: this.data.id,
+        trend: 1
+      })
+      if (data.code !== 1) {
+        this.$message.error(data.message)
+      } else {
+        const expressData = JSON.parse(data.object.content);
+        this.orderExpressLog = expressData.result.list;
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

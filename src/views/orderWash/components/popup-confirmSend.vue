@@ -1,84 +1,90 @@
 <template>
   <div class="popup-comfirm-send-wrapper">
-    <el-form ref="form" label-width="120px">
-      <el-tabs class="order-sub-list" shadow="never">
-        <el-tab-pane v-for="(item, index) in data.orderSubVoList" :key="index" :label='item.goodzTitle'>
-          <el-row :gutter="0">
-            <el-col :span="6">
-              <el-form-item label="鞋子品牌">
-                <el-input v-model="item.orderStoreCollectVo.brand" placeholder="请输入" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="具体型号">
-                <el-input v-model="item.orderStoreCollectVo.model" placeholder="请输入" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="估算二手市场价">
-                <el-input v-model="item.orderStoreCollectVo.amount" placeholder="请输入" disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-divider content-position="left">请补充鞋子清洗完成照片</el-divider>
-          <el-row class="image-card-container" :gutter="20">
-            <template v-for="(sub, subIndex) in imageLists[index]">
-              <div class="mr20" :key="subIndex">
-                <el-upload class="image-uploader" :show-file-list='false' action="" accept="image/*" :http-request="httpRequestEx" :on-success="(value)=> onSuccess(value, index, subIndex)">
-                  <el-image v-if="sub.url" :src="sub.url" fit="cover"></el-image>
-                  <i v-else class="el-icon-plus"></i>
-                </el-upload>
-                <div class="tacenter fs14">
-                  <span>{{aspectToValue(subIndex)}}</span>
+    <el-dialog title="确认完成" :visible.sync="showDialog" width="80%">
+      <el-form ref="form" label-width="120px">
+        <el-tabs class="order-sub-list" shadow="never">
+          <el-tab-pane v-for="(item, index) in data.orderSubVoList" :key="index" :label='item.goodzTitle'>
+            <el-row :gutter="0">
+              <el-col :span="6">
+                <el-form-item label="鞋子品牌">
+                  <el-input v-model="item.orderStoreCollectVo.brand" placeholder="请输入" disabled></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="具体型号">
+                  <el-input v-model="item.orderStoreCollectVo.model" placeholder="请输入" disabled></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="估算二手市场价">
+                  <el-input v-model="item.orderStoreCollectVo.amount" placeholder="请输入" disabled></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-divider content-position="left">请补充鞋子清洗完成照片</el-divider>
+            <el-row class="image-card-container" :gutter="20">
+              <template v-for="(sub, subIndex) in imageLists[index]">
+                <div class="mr20" :key="subIndex">
+                  <el-upload class="image-uploader" :show-file-list='false' action="" accept="image/*" :http-request="httpRequestEx" :on-success="(value)=> onSuccess(value, index, subIndex)">
+                    <el-image v-if="sub.url" :src="sub.url" fit="cover"></el-image>
+                    <i v-else class="el-icon-plus"></i>
+                  </el-upload>
+                  <div class="tacenter fs14">
+                    <span>{{aspectToValue(subIndex)}}</span>
+                  </div>
                 </div>
-              </div>
-            </template>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-form-item label="备注">
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
-      <el-divider content-position="left"></el-divider>
-      <el-divider content-position="left">补充物流信息</el-divider>
-      <el-row :gutter="0">
-        <el-col :span="6">
-          <el-form-item label="寄回方式">
-            <el-select v-model="sendWay" placeholder="请选择" disabled>
-              <el-option v-for="item in sendWayList" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="物流公司">
-            <el-select v-model="formParams.toUserExpressId" placeholder="请选择">
-              <el-option v-for="item in expressCompanyList" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="物流单号">
-            <el-input v-model="formParams.toUserExpressNumber" placeholder="请输入"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-divider content-position="left">收货地址</el-divider>
-      <el-row :gutter="0" v-if="data.userAddressVo">
-        <el-col :span="6">
-          <el-form-item label="收货人">{{data.userAddressVo.linkName}}</el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="手机号码">{{data.userAddressVo.phone}}</el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="详细地址">{{data.userAddressVo.provinceName}} {{data.userAddressVo.cityName}} {{data.userAddressVo.countyName}} {{data.userAddressVo.address}}</el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+              </template>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item label="备注">
+                  <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+        </el-tabs>
+        <el-divider content-position="left"></el-divider>
+        <el-divider content-position="left">补充物流信息</el-divider>
+        <el-row :gutter="0">
+          <el-col :span="6">
+            <el-form-item label="寄回方式">
+              <el-select v-model="sendWay" placeholder="请选择" disabled>
+                <el-option v-for="item in sendWayList" :key="item.value" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="物流公司">
+              <el-select v-model="formParams.toUserExpressId" placeholder="请选择">
+                <el-option v-for="item in expressCompanyList" :key="item.value" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="物流单号">
+              <el-input v-model="formParams.toUserExpressNumber" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-divider content-position="left">收货地址</el-divider>
+        <el-row :gutter="0" v-if="data.userAddressVo">
+          <el-col :span="6">
+            <el-form-item label="收货人">{{data.userAddressVo.linkName}}</el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="手机号码">{{data.userAddressVo.phone}}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="详细地址">{{data.userAddressVo.provinceName}} {{data.userAddressVo.cityName}} {{data.userAddressVo.countyName}} {{data.userAddressVo.address}}</el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="close">确认完成</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -86,6 +92,10 @@ import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
 import * as commonApi from '@/api/common'
 export default {
   props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
     data: {
       type: Object,
       default: () => { }
@@ -96,6 +106,10 @@ export default {
       statusToValue,
       channelToValue,
       aspectToValue,
+
+      showDialog: false,
+
+      remark: '',
 
       sendWay: 1,
       sendWayList: [
@@ -112,6 +126,14 @@ export default {
       }
     }
   },
+  watch: {
+    value(val) {
+      this.showDialog = val
+    },
+    showDialog(val) {
+      this.$emit('input', val)
+    } 
+  },
   computed: {
     imageLists() {
       if (this.data && this.data.orderSubVoList) {
@@ -126,6 +148,9 @@ export default {
     this.getExpressCompanyList()
   },
   methods: {
+    close() {
+      this.showDialog = false
+    },
     // 自定义上传的实现
     async getExpressCompanyList() {
       const data = await commonApi.getExpressCompanyList()
@@ -153,7 +178,7 @@ export default {
       }
     },
     calcParams() {
-      
+
     }
   }
 }
