@@ -92,6 +92,7 @@
 <script>
 import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
 import * as commonApi from '@/api/common'
+import * as orderApi from '@/api/order'
 export default {
   props: {
     value: {
@@ -165,46 +166,54 @@ export default {
       }
     },
     calcParams() {
-      let notInfo = null
-      this.formParams.storeCollectSubParamList.map((ele, index) => {
+      let errorMessage = ""
+      for (let i = 0; i < this.formParams.storeCollectSubParamList.length; i++) {
+        const ele = this.formParams.storeCollectSubParamList[i];
+
         if (!ele.brand) {
-          notInfo = notInfo || { index, value: '鞋子品牌' }
+          errorMessage = `第${i + 1}双鞋的鞋子品牌没有填写`
+          break
         }
         if (!ele.model) {
-          notInfo = notInfo || { index, value: '具体型号' }
+          errorMessage = `第${i + 1}双鞋的具体型号没有填写`
+          break
         }
         if (!ele.amount) {
-          notInfo = notInfo || { index, value: '估算二手市场价' }
+          errorMessage = `第${i + 1}双鞋的估算二手市场价没有填写`
+          break
         }
-      })
 
-      if (notInfo) {
-        this.$message.error(`第${notInfo.index + 1}双鞋的${notInfo.value}没有填写`)
-        return false
-      }
+        let shouldBreak = false
 
-      let notUpload = null;
-      this.imageLists.map((ele, index) => {
-        ele.map((sub, subIndex) => {
+        for (let j = 0; j < this.imageLists[i].length; j++) {
+          const sub = this.imageLists[i][j];
           if (sub.url) {
-            this.formParams.storeCollectSubParamList[index][`image${subIndex}Url`] = sub.url
+            ele[`image${j}Url`] = sub.url
           } else {
-            notUpload = notUpload || { index, subIndex };
+            errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`
+            shouldBreak = true;
+            break
           }
-        })
-      })
-      if (notUpload) {
-        this.$message.error(`第${notUpload.index + 1}双鞋的第${notUpload.subIndex + 1}张照片没有上传`)
-        return false
+        }
+        if (shouldBreak) break
       }
-      return true
-    },
-    submit() {
-      if (this.calcParams()) {
-        console.log(true)
-        console.log(this.formParams)
+      if (errorMessage) {
+        this.$message.error(errorMessage)
+        return false
       } else {
-        console.log(false)
+        return true
+      }
+    },
+
+    async submit() {
+      if (!this.calcParams()) return
+      const data = await orderApi.storeCollect(this.formParams)
+      if (data.code !== 1) {
+        this.$message.error(data.message)
+      } else {
+        this.$message.success('提交成功')
+        this.$emit('reload-page')
+        this.close()
       }
     }
   }

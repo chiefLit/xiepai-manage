@@ -29,9 +29,9 @@
 
     <detailOrderLogs :data="dataOrderLogs" />
     <!-- 确认收鞋 -->
-    <popupConfirmReceipt v-model="dialogVisible1" :data="dataOrderDetail" />
+    <popupConfirmReceipt v-model="dialogVisible1" :data="dataOrderDetail" @reload-page="pullData"/>
     <!-- 确认寄鞋 -->
-    <popupConfirmSend v-model="dialogVisible2" :data="dataOrderDetail" />
+    <popupConfirmSend v-model="dialogVisible2" :data="dataOrderDetail" @reload-page="pullData" />
   </div>
 </template>
 <script>
