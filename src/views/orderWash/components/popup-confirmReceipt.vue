@@ -111,39 +111,8 @@ export default {
 
       showDialog: false,
 
-      // imageLists: [],
-      // formParams: {}
-    }
-  },
-  computed: {
-    imageLists: {
-      get: () => {
-        return this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
-      },
-      set: () => {
-
-      }
-    },
-    formParams: {
-      get: () => {
-        const storeCollectSubParamList = this.data.orderSubVoList.map(ele => {
-          return {
-            orderSubId: ele.id, //	是	int	子订单ID
-            brand: '', //	是	string	品牌
-            model: '', //	是	string	系列
-            amount: '', //	否	double	评估价
-            remark: '', //	否	string	正面照片
-            image0Url: '', //	是	string	正面照片
-            image1Url: '', //	是	string	背面照片
-            image2Url: '', //	是	string	侧面照片
-            image3Url: '' //	是	string	底部照片
-          }
-        })
-        return {
-          orderId: this.data.id,
-          storeCollectSubParamList
-        }
-      }
+      imageLists: [],
+      formParams: {}
     }
   },
   watch: {
@@ -154,29 +123,29 @@ export default {
       this.$emit('input', val)
     },
 
-    // data(val) {
-    //   if (!val.orderSubVoList || !val.orderSubVoList.length) return
+    data(val) {
+      if (!val.orderSubVoList || !val.orderSubVoList.length) return
 
-    //   this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
+      this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
 
-    //   const storeCollectSubParamList = this.data.orderSubVoList.map(ele => {
-    //     return {
-    //       orderSubId: ele.id, //	是	int	子订单ID
-    //       brand: '', //	是	string	品牌
-    //       model: '', //	是	string	系列
-    //       amount: '', //	否	double	评估价
-    //       remark: '', //	否	string	正面照片
-    //       image0Url: '', //	是	string	正面照片
-    //       image1Url: '', //	是	string	背面照片
-    //       image2Url: '', //	是	string	侧面照片
-    //       image3Url: '' //	是	string	底部照片
-    //     }
-    //   })
-    //   this.formParams = {
-    //     orderId: this.data.id,
-    //     storeCollectSubParamList
-    //   }
-    // }
+      const storeCollectSubParamList = this.data.orderSubVoList.map(ele => {
+        return {
+          orderSubId: ele.id, //	是	int	子订单ID
+          brand: '', //	是	string	品牌
+          model: '', //	是	string	系列
+          amount: '', //	否	double	评估价
+          remark: '', //	否	string	正面照片
+          image0Url: '', //	是	string	正面照片
+          image1Url: '', //	是	string	背面照片
+          image2Url: '', //	是	string	侧面照片
+          image3Url: '' //	是	string	底部照片
+        }
+      })
+      this.formParams = {
+        orderId: this.data.id,
+        storeCollectSubParamList
+      }
+    }
   },
   methods: {
     close() {
