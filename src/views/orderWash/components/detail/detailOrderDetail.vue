@@ -64,7 +64,7 @@
         </el-col>
         <el-col :span="6">
           <div class=" name">用户实际支付</div>
-          <div class=" value">{{data.realPayPrice}}</div>
+          <div class=" value">{{data.realPayAmount}}</div>
         </el-col>
         <el-col :span="6">
           <div class=" name">支付订单号</div>
