@@ -13,6 +13,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    console.log(1231)
     // do something before request is sent
 
     if (store.getters.token) {
@@ -71,12 +72,24 @@ service.interceptors.response.use(
     }
   },
   error => {
-    // console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    if (error.response.status === 401 || error.response.status === 402) {
+      // to re-login
+      MessageBox.confirm('你已退出登录', '提示', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '退出',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
+        })
+      })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )
