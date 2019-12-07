@@ -2,8 +2,8 @@
 <template>
   <div class="express-info-wrapper">
     <div class="" v-if="data.resultcode !== '200'">{{data.reason}}</div>
-    <el-timeline :reverse="false" v-if="data.resultcode === '200' && data.result.length">
-      <el-timeline-item v-for="(item, index) in data.result" :key="index" :timestamp="item.datetime">
+    <el-timeline :reverse="false" v-if="data.resultcode === '200' && data.result.list.length">
+      <el-timeline-item v-for="(item, index) in data.result.list" :key="index" :timestamp="item.datetime">
         {{item.remark}}
       </el-timeline-item>
     </el-timeline>
@@ -17,7 +17,7 @@ export default {
       default: () => {}
     }
   },
-  
+
 }
 </script>
 <style lang="scss" scoped>
