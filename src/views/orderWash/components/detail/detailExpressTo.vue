@@ -25,7 +25,8 @@
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
     </el-row>
-    <expressInfo :list="orderExpressLog" />
+    
+    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog"/>
     <!-- <div class="iframe-box">
       <iframe src="https://wwww.baidu.com" height="500" width="100%"></iframe>
     </div> -->
@@ -49,7 +50,7 @@ export default {
       channelToValue,
       aspectToValue,
 
-      orderExpressLog: []
+      orderExpressLog: {}
     }
   },
   mounted() {
@@ -66,7 +67,7 @@ export default {
         this.$message.error(data.message)
       } else {
         const expressData = JSON.parse(data.object.content);
-        this.orderExpressLog = expressData.result.list;
+        this.orderExpressLog = expressData
       }
     }
   }

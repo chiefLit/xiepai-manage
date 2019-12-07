@@ -10,8 +10,8 @@
         <div class="wp70 value">{{data.toStoreExpressNumber}}</div>
       </el-col>
     </el-row>
-    
-    <expressInfo v-if="orderExpressLog.length" :list.sync="orderExpressLog" />
+    <!-- <div cl v-if="orderExpressErrorReason">{{orderExpressErrorReason}}</div> -->
+    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog"/>
   </el-card>
 </template>
 <script>
@@ -32,7 +32,7 @@ export default {
       channelToValue,
       aspectToValue,
 
-      orderExpressLog: []
+      orderExpressLog: {}
     }
   },
   mounted() {
@@ -49,7 +49,7 @@ export default {
         this.$message.error(data.message)
       } else {
         const expressData = JSON.parse(data.object.content);
-        this.orderExpressLog = expressData.result.list;
+        this.orderExpressLog = expressData
       }
     }
   }
