@@ -28,10 +28,14 @@
     </div>
 
     <detailOrderLogs :data="dataOrderLogs" />
-    <!-- 确认收鞋 -->
-    <popupConfirmReceipt v-model="dialogVisible1" :data="dataOrderDetail" @reload-page="pullData"/>
-    <!-- 确认寄鞋 -->
-    <popupConfirmSend v-model="dialogVisible2" :data="dataOrderDetail" @reload-page="pullData" />
+    <template v-if="data.status === 2">
+      <!-- 确认收鞋 -->
+      <popupConfirmReceipt v-model="dialogVisible1" :data="dataOrderDetail" @reload-page="pullData" />
+    </template>
+    <template v-if="data.status === 4">
+      <!-- 确认寄鞋 -->
+      <popupConfirmSend v-model="dialogVisible2" :data="dataOrderDetail" @reload-page="pullData" />
+    </template>
   </div>
 </template>
 <script>

@@ -60,7 +60,7 @@
       <el-table-column prop="number" label="订单号" />
       <el-table-column label="下单时间">
         <template slot-scope="scope">
-          {{scope.row.payTime | parseTime}}
+          {{scope.row.applyTime | parseTime}}
         </template>
       </el-table-column>
       <el-table-column prop="phone" label="用户名称" />
@@ -70,8 +70,12 @@
           {{channelToValue(scope.row.channel)}}
         </template>
       </el-table-column>
-      <el-table-column prop="totalPrice" label="订单总价" />
-      <el-table-column prop="realPayPrice" label="用户实付金额" />
+      <el-table-column label="订单总价" >
+        <template slot-scope="scope">{{scope.row.totalPrice ? scope.row.totalPrice.toFixed(2) : "--"}}</template>
+      </el-table-column>
+      <el-table-column label="用户实付金额" >
+        <template slot-scope="scope">{{scope.row.realPayAmount ? scope.row.realPayAmount.toFixed(2) : "--"}}</template>
+      </el-table-column>
       <el-table-column label="订单状态">
         <template slot-scope="scope">{{statusToValue(scope.row.status)}}</template>
       </el-table-column>
