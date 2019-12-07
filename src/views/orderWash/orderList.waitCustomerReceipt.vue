@@ -1,6 +1,6 @@
 <template>
   <div class="order-list-all-wrapper">
-    <template-list status="7"/>
+    <template-list status="6"/>
   </div>
 </template>
 <script>
