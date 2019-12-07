@@ -133,9 +133,10 @@ export default {
     },
     showDialog(val) {
       this.$emit('input', val)
-    },
-    data(val) {
-      if (!val.orderSubVoList || !val.orderSubVoList.length) return
+    }
+  },
+  beforeMount() {
+    this.getExpressCompanyList()
 
       this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
 
@@ -143,19 +144,15 @@ export default {
         return {
           orderSubId: ele.id, //	是	int	子订单ID
           completeRemark: '', //	否	string	正面照片
-          image0Url: '', //	是	string	正面照片
-          image1Url: '', //	是	string	背面照片
-          image2Url: '', //	是	string	侧面照片
-          image3Url: '' //	是	string	底部照片
+          image0: '', //	是	string	正面照片
+          image1: '', //	是	string	背面照片
+          image2: '', //	是	string	侧面照片
+          image3: '' //	是	string	底部照片
         }
       })
 
-      this.formParams.orderId = val.id;
+      this.formParams.orderId = this.data.id;
       this.formParams.serviceResultSubParamList = serviceResultSubParamList;
-    }
-  },
-  beforeMount() {
-    this.getExpressCompanyList()
   },
   methods: {
     close() {
@@ -197,7 +194,7 @@ export default {
         for (let j = 0; j < this.imageLists[i].length; j++) {
           const sub = this.imageLists[i][j];
           if (sub.url) {
-            ele[`image${j}Url`] = sub.url
+            ele[`image${j}`] = sub.url
           } else {
             errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`
             shouldBreak = true;
@@ -226,7 +223,7 @@ export default {
 
     async submit() {
       if (!this.calcParams()) return
-      const data = await orderApi.storeCollect(this.formParams)
+      const data = await orderApi.serviceResult(this.formParams)
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {

@@ -20,5 +20,5 @@ export function uploadFile(file, extData) {
   }
   fd.append('timestamp', +new Date())
   fd.append('file', file)
-  return request.post('/api/file/upload', fd)
+  return request.post('/file/upload', fd)
 }

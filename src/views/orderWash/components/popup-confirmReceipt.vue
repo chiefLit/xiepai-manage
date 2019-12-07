@@ -40,7 +40,7 @@
             </el-row>
 
             <el-divider content-position="left">补充鞋子信息</el-divider>
-            <el-row :gutter="0">
+            <el-row :gutter="0" v-if="formParams.storeCollectSubParamList">
               <el-col :span="6">
                 <el-form-item label="鞋子品牌">
                   <el-input v-model="formParams.storeCollectSubParamList[index].brand" placeholder="请输入"></el-input>
@@ -113,7 +113,9 @@ export default {
       showDialog: false,
 
       imageLists: [],
-      formParams: {}
+      formParams: {
+        storeCollectSubParamList: []
+      }
     }
   },
   watch: {
@@ -122,30 +124,28 @@ export default {
     },
     showDialog(val) {
       this.$emit('input', val)
-    },
+    }
+  },
+  beforeMount() {
 
-    data(val) {
-      if (!val.orderSubVoList || !val.orderSubVoList.length) return
+    this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
 
-      this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
-
-      const storeCollectSubParamList = this.data.orderSubVoList.map(ele => {
-        return {
-          orderSubId: ele.id, //	是	int	子订单ID
-          brand: '', //	是	string	品牌
-          model: '', //	是	string	系列
-          amount: '', //	否	double	评估价
-          remark: '', //	否	string	正面照片
-          image0Url: '', //	是	string	正面照片
-          image1Url: '', //	是	string	背面照片
-          image2Url: '', //	是	string	侧面照片
-          image3Url: '' //	是	string	底部照片
-        }
-      })
-      this.formParams = {
-        orderId: this.data.id,
-        storeCollectSubParamList
+    const storeCollectSubParamList = this.data.orderSubVoList.map(ele => {
+      return {
+        orderSubId: ele.id, //	是	int	子订单ID
+        brand: '', //	是	string	品牌
+        model: '', //	是	string	系列
+        amount: '', //	否	double	评估价
+        remark: '', //	否	string	正面照片
+        image0: '', //	是	string	正面照片
+        image1: '', //	是	string	背面照片
+        image2: '', //	是	string	侧面照片
+        image3: '' //	是	string	底部照片
       }
+    })
+    this.formParams = {
+      orderId: this.data.id,
+      storeCollectSubParamList
     }
   },
   methods: {
@@ -188,7 +188,7 @@ export default {
         for (let j = 0; j < this.imageLists[i].length; j++) {
           const sub = this.imageLists[i][j];
           if (sub.url) {
-            ele[`image${j}Url`] = sub.url
+            ele[`image${j}`] = sub.url
           } else {
             errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`
             shouldBreak = true;
@@ -207,7 +207,7 @@ export default {
 
     async submit() {
       if (!this.calcParams()) return
-      const data = await orderApi.serviceResult(this.formParams)
+      const data = await orderApi.storeCollect(this.formParams)
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {
