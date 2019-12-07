@@ -103,7 +103,7 @@ export default {
           orderSubVoList: [...data.object.orderSubVoList],
           userAddressVo: { ...data.object.userAddressVo },
           couponAmount: data.object.couponAmount,
-          realPayPrice: data.object.realPayPrice,
+          realPayAmount: data.object.realPayAmount,
           payOrderNumber: data.object.payOrderNumber
         }
 

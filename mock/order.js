@@ -21,7 +21,7 @@ const data = Mock.mock({
         couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
         couponDiscountAmount: 12.12, //	double	优惠券优惠金额
         totalDiscountAmount: 12.12, //	double	总优惠金额
-        realPayPrice: 23.43, //	double	总优惠金额
+        realPayAmount: 23.43, //	double	总优惠金额
         serviceDetailList: [
           {
             serviceId: 1, //	int	服务项目ID
@@ -66,7 +66,7 @@ const data = Mock.mock({
         couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
         couponDiscountAmount: 12.12, //	double	优惠券优惠金额
         totalDiscountAmount: 12.12, //	double	总优惠金额
-        realPayPrice: 23.43, //	double	总优惠金额
+        realPayAmount: 23.43, //	double	总优惠金额
         serviceDetailList: [
           {
             serviceId: 1, //	int	服务项目ID
@@ -103,7 +103,7 @@ const data = Mock.mock({
     totalPrice: 123.43,
     couponId: 1,
     couponAmount: 50.21,
-    realPayPrice: 72.12,
+    realPayAmount: 72.12,
     storeVo: {
       id: 1, //	int	id
       name: '店名', //	String	店名
@@ -204,7 +204,7 @@ export default [
               couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
               couponDiscountAmount: 12.12, //	double	优惠券优惠金额
               totalDiscountAmount: 12.12, //	double	总优惠金额
-              realPayPrice: 23.43, //	double	总优惠金额
+              realPayAmount: 23.43, //	double	总优惠金额
               serviceDetailList: [
                 {
                   serviceId: 1, //	int	服务项目ID
@@ -309,7 +309,7 @@ export default [
               couponId: 1, //	int	用户选了就是他选的优惠券ID，如果没选，系统会择优选择
               couponDiscountAmount: 12.12, //	double	优惠券优惠金额
               totalDiscountAmount: 12.12, //	double	总优惠金额
-              realPayPrice: 23.43, //	double	总优惠金额
+              realPayAmount: 23.43, //	double	总优惠金额
               serviceDetailList: [
                 {
                   serviceId: 1, //	int	服务项目ID
@@ -403,7 +403,7 @@ export default [
           totalPrice: 122.21,
           couponId: 1,
           couponAmount: 20,
-          realPayPrice: 101.12,
+          realPayAmount: 101.12,
           storeVo: {
             id: 1, //	int	id
             name: '店名', //	String	店名
