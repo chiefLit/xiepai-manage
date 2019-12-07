@@ -443,7 +443,7 @@ export default [
           toUserExpressId: 213,
           toUserExpressName: '圆通',
           toUserExpressNumber: '1312312',
-          status: 3,
+          status: 1,
           applyTime: 123123123,
           payChannel: 1,
           payTime: 12312312,

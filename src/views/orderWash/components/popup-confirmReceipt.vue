@@ -207,7 +207,7 @@ export default {
 
     async submit() {
       if (!this.calcParams()) return
-      const data = await orderApi.storeCollect(this.formParams)
+      const data = await orderApi.serviceResult(this.formParams)
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {

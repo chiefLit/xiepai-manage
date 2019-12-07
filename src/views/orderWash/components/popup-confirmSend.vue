@@ -38,7 +38,7 @@
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item label="备注">
-                  <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
+                  <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="formParams.serviceResultSubParamList[index].remark"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -82,7 +82,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="close">确认完成</el-button>
+        <el-button type="primary" @click="submit">确认完成</el-button>
       </span>
     </el-dialog>
   </div>
@@ -90,6 +90,7 @@
 <script>
 import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
 import * as commonApi from '@/api/common'
+import * as orderApi from '@/api/order'
 export default {
   props: {
     value: {
@@ -109,8 +110,6 @@ export default {
 
       showDialog: false,
 
-      remark: '',
-
       sendWay: 1,
       sendWayList: [
         { value: 1, label: '快递' },
@@ -118,6 +117,8 @@ export default {
         { value: 3, label: '客户上门自取' },
       ],
       expressCompanyList: [],
+
+      imageLists: [],
       formParams: {
         orderId: null, //	是	int	订单ID
         toUserExpressId: null, //	是	int	选中的快递公司ID
@@ -132,26 +133,35 @@ export default {
     },
     showDialog(val) {
       this.$emit('input', val)
-    } 
-  },
-  computed: {
-    imageLists() {
-      if (this.data && this.data.orderSubVoList) {
-        return this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
-      } else {
-        return []
-      }
+    },
+    data(val) {
+      if (!val.orderSubVoList || !val.orderSubVoList.length) return
+
+      this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
+
+      const serviceResultSubParamList = this.data.orderSubVoList.map(ele => {
+        return {
+          orderSubId: ele.id, //	是	int	子订单ID
+          completeRemark: '', //	否	string	正面照片
+          image0Url: '', //	是	string	正面照片
+          image1Url: '', //	是	string	背面照片
+          image2Url: '', //	是	string	侧面照片
+          image3Url: '' //	是	string	底部照片
+        }
+      })
+
+      this.formParams.orderId = val.id;
+      this.formParams.serviceResultSubParamList = serviceResultSubParamList;
     }
   },
   beforeMount() {
-    // console.log(this.data)
     this.getExpressCompanyList()
   },
   methods: {
     close() {
       this.showDialog = false
     },
-    // 自定义上传的实现
+    // 获取快递公司列表
     async getExpressCompanyList() {
       const data = await commonApi.getExpressCompanyList()
       if (data.code !== 1) {
@@ -178,7 +188,52 @@ export default {
       }
     },
     calcParams() {
+      let errorMessage = ""
+      for (let i = 0; i < this.formParams.serviceResultSubParamList.length; i++) {
+        const ele = this.formParams.serviceResultSubParamList[i];
 
+        let shouldBreak = false;
+
+        for (let j = 0; j < this.imageLists[i].length; j++) {
+          const sub = this.imageLists[i][j];
+          if (sub.url) {
+            ele[`image${j}Url`] = sub.url
+          } else {
+            errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`
+            shouldBreak = true;
+            break
+          }
+        }
+        if (shouldBreak) break
+      }
+      if (errorMessage) {
+        this.$message.error(errorMessage)
+        return false
+      }
+      if (!this.formParams.toUserExpressId) {
+        errorMessage = errorMessage || '请选择物流公司'
+      }
+      if (!this.formParams.toUserExpressNumber) {
+        errorMessage = errorMessage || '请填写物流单号'
+      }
+      if (errorMessage) {
+        this.$message.error(errorMessage)
+        return false
+      } else {
+        return true
+      }
+    },
+
+    async submit() {
+      if (!this.calcParams()) return
+      const data = await orderApi.storeCollect(this.formParams)
+      if (data.code !== 1) {
+        this.$message.error(data.message)
+      } else {
+        this.$message.success('提交成功')
+        this.$emit('reload-page')
+        this.close()
+      }
     }
   }
 }

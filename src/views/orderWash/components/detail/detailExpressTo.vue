@@ -34,6 +34,7 @@
 <script>
 import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
 import expressInfo from './expressInfo'
+import * as orderApi from '@/api/order'
 export default {
   components: { expressInfo },
   props: {
@@ -48,7 +49,7 @@ export default {
       channelToValue,
       aspectToValue,
 
-      orderExpressLog
+      orderExpressLog: []
     }
   },
   mounted() {
