@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async pullData() {
-      const data = await orderApi.getOrderDetail({ id: this.$route.params.id });
+      const data = await orderApi.getOrderDetail({ orderId: this.$route.query.id });
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {

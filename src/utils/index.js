@@ -9,8 +9,7 @@
  * @returns {string | null}
  */
 export function parseTime(time, cFormat) {
-  // console.log(time, cFormat)
-  // return '1212'
+  if (!time) return '--'
   if (arguments.length === 0) {
     return null
   }
