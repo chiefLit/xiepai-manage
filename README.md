@@ -1,3 +1,3 @@
 # 鞋派管理后台
 
-线上地址: http://bgms.sneakerpai.com
+测试地址: http://dev-bgms.sneakerpai.com
