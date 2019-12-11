@@ -25,8 +25,8 @@
         <div class="wp70 value">{{data.toUserExpressNumber}}</div>
       </el-col>
     </el-row>
-    
-    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog"/>
+
+    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog" />
     <!-- <div class="iframe-box">
       <iframe src="https://wwww.baidu.com" height="500" width="100%"></iframe>
     </div> -->
@@ -66,8 +66,14 @@ export default {
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {
-        const expressData = JSON.parse(data.object.content);
-        this.orderExpressLog = expressData
+        if (data.object && data.object.content) {
+          const expressData = JSON.parse(data.object.content);
+          this.orderExpressLog = expressData
+        } else {
+          this.orderExpressLog = {
+            reason: '无物流信息'
+          }
+        }
       }
     }
   }

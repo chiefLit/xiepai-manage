@@ -16,8 +16,7 @@ export default {
       type: Object,
       default: () => {}
     }
-  },
-
+  }
 }
 </script>
 <style lang="scss" scoped>

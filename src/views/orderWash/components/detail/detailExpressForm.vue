@@ -48,8 +48,14 @@ export default {
       if (data.code !== 1) {
         this.$message.error(data.message)
       } else {
-        const expressData = JSON.parse(data.object.content);
-        this.orderExpressLog = expressData
+        if (data.object && data.object.content) {
+          const expressData = JSON.parse(data.object.content);
+          this.orderExpressLog = expressData
+        } else {
+          this.orderExpressLog = {
+            reason: '无物流信息'
+          }
+        }
       }
     }
   }
