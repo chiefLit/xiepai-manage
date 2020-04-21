@@ -29,6 +29,18 @@ service.interceptors.request.use(
   }
 )
 
+const handlerLogout = () => {
+  MessageBox.confirm('你已退出登录', 'Confirm logout', {
+    confirmButtonText: '重新登录',
+    cancelButtonText: '退出',
+    type: 'warning'
+  }).then(() => {
+    store.dispatch('user/resetToken').then(() => {
+      location.reload()
+    })
+  })
+}
+
 // response interceptor
 service.interceptors.response.use(
   /**
@@ -55,15 +67,7 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 401 || res.code === 402) {
         // to re-login
-        MessageBox.confirm('你已退出登录', 'Confirm logout', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '退出',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
+        handlerLogout()
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
@@ -73,15 +77,7 @@ service.interceptors.response.use(
   error => {
     if (error.response.status === 401 || error.response.status === 402) {
       // to re-login
-      MessageBox.confirm('你已退出登录', '提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '退出',
-        type: 'warning'
-      }).then(() => {
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
-      })
+      handlerLogout()
     } else {
       Message({
         message: error.message,
