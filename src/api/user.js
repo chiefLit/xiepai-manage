@@ -1,8 +1,36 @@
 import request from '@/utils/request'
 
-export function login(data) {
+// 角色列表
+export function getRoleList(data) {
   return request({
-    url: '/api/bgms/manager/login',
+    url: '/api/bgms/role/list',
+    method: 'post',
+    data
+  })
+}
+
+// 用户列表
+export function getUserList(data) {
+  return request({
+    url: '/api/bgms/user/list',
+    method: 'post',
+    data
+  })
+}
+
+// 修改用户
+export function updateUser(data) {
+  return request({
+    url: '/api/bgms/user/update',
+    method: 'post',
+    data
+  })
+}
+
+// 创建用户
+export function restPassword(data) {
+  return request({
+    url: '/api/bgms/user/restPassword',
     method: 'post',
     data
   })
@@ -15,10 +43,3 @@ export function login(data) {
 //     params: { token }
 //   })
 // }
-
-export function logout() {
-  return request({
-    url: '/api/bgms/manager/logout',
-    method: 'post'
-  })
-}

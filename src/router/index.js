@@ -106,6 +106,22 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/goodz',
+    component: Layout,
+    name: 'goodz',
+    redirect: '/goodz/list',
+    meta: { title: '商品管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'goodz.list',
+        component: () => import('@/views/goodzManage/goodz-list'),
+        meta: { title: '商品管理' }
+      }
+    ]
+  },
+
   // {
   //   path: '/example',
   //   component: Layout,
