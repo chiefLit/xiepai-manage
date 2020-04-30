@@ -122,6 +122,56 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/financial-manage',
+    component: Layout,
+    name: 'financialManage',
+    redirect: '/financial-manage/user',
+    meta: { title: '财务管理', icon: 'example' },
+    children: [
+      {
+        path: 'platform',
+        name: 'financialManage.platform',
+        component: () => import('@/views/financialManage/financial-platform'),
+        meta: { title: '平台流水' }
+      },
+      {
+        path: 'store',
+        name: 'financialManage.store',
+        component: () => import('@/views/financialManage/financial-store'),
+        meta: { title: '店铺流水' }
+      }
+    ]
+  },
+
+  {
+    path: '/system-manage',
+    component: Layout,
+    name: 'systemManage',
+    redirect: '/system-manage/user',
+    meta: { title: '系统管理', icon: 'example' },
+    children: [
+      {
+        path: 'user',
+        name: 'systemManage.user',
+        component: () => import('@/views/systemManage/user-manage'),
+        meta: { title: '用户管理' }
+      },
+      {
+        path: 'role',
+        name: 'systemManage.role',
+        component: () => import('@/views/systemManage/role-manage'),
+        meta: { title: '角色管理' }
+      },
+      {
+        path: 'store',
+        name: 'systemManage.store',
+        component: () => import('@/views/systemManage/store-manage'),
+        meta: { title: '店铺管理' }
+      }
+    ]
+  },
+
   // {
   //   path: '/example',
   //   component: Layout,

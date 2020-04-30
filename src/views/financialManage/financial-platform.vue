@@ -1,15 +1,11 @@
 <template>
-  <div class="">
-    
+  <div class="financail-platform-wrapper">
+    <template-list />
   </div>
 </template>
 <script>
+import TemplateList from './components/templateList'
 export default {
-  data() {
-    return {}
-  }
+  components: { TemplateList }
 }
 </script>
-<style lang="less" scoped>
-
-</style>
