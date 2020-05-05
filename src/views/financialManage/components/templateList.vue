@@ -115,6 +115,7 @@ export default {
   data() {
     return {
       payChannelList: [
+        { label: '全部', value: null },
         { label: '微信', value: 0 }
       ],
       storeList: [],
@@ -126,7 +127,7 @@ export default {
         startTime: null,
         endTime: null,
         phone: "",
-        channel: "",
+        channel: null,
         storeId: null,
 
         currentPage: 1,

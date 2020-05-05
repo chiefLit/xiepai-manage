@@ -79,7 +79,7 @@
       <el-table-column label="订单状态">
         <template slot-scope="scope">{{statusToValue(scope.row.status)}}</template>
       </el-table-column>
-      <el-table-column prop="address" label="操作" width="80px">
+      <el-table-column label="操作" width="80px">
         <template slot-scope="scope">
           <el-button type="text" @click="toDetail(scope.row)">查看</el-button>
         </template>
