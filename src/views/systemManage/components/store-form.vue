@@ -139,8 +139,6 @@ export default {
       });
     },
     async submit() {
-      // console.log(this.$parent)
-      // return
       const promise = storeApi.updateStore;
       const data = await promise({
         ...this.storeData,

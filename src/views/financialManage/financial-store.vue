@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import TemplateList from './components/templateList'
+import TemplateList from './components/template-list'
 export default {
   components: { TemplateList }
 }

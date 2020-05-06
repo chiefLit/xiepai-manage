@@ -134,7 +134,7 @@ export default {
         pageSize: 20
       },
       dataList: [],
-      amountDesc: ''
+      amountDesc: '当前汇总：总金额：0.00 笔数：0 笔'
     };
   },
   computed: {
@@ -161,7 +161,10 @@ export default {
   },
   methods: {
     async pulldata() {
-      const data = await fundlogApi.findPlatformFundlog(this.formParams);
+      const isPlaform = this.$route.name === 'financialManage.platform'
+      const promise = isPlaform ? fundlogApi.findPlatformFundlog : fundlogApi.findStoreFundlog
+      console.log(isPlaform)
+      const data = await promise(this.formParams);
       this.dataList = data.object;
       this.totalRecords = data.page.totalRecords;
       this.amountDesc = `当前汇总：总金额：${data.map.sumAmount || '0.00'} 笔数：${data.map.count || '0'} 笔`

@@ -94,7 +94,7 @@ import * as goodzApi from "@/api/goodz";
 import * as storeApi from "@/api/store";
 import { statusToValue, channelToValue, orderOptions } from "@/globalConfig";
 
-import EditComponent from "./components/edit"
+import EditComponent from "./components/goodz-form"
 
 export default {
   name: "filter-search",

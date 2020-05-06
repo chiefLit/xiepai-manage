@@ -99,6 +99,7 @@ export default {
   },
   mounted() {
     this.getStoreList();
+    this.getRoleList()
   },
   methods: {
     async getStoreList() {
@@ -114,7 +115,7 @@ export default {
       });
     },
     async getRoleList() {
-      const data = userApi.getRoleList({ currentPage: 1, pageSize: 20 });
+      const data = await userApi.getRoleList({ currentPage: 1, pageSize: 20 });
       this.roleOptions = data.object.map(item => {
         return {
           label: item.name,
@@ -125,6 +126,10 @@ export default {
     async submit() {
       const promise = this.data.id ? userApi.updateUser : userApi.createUser;
       const data = await promise(this.userData);
+      const message = this.data.id ? '修改用户成功' : '新增用户成功';
+      this.$message.success(message)
+      this.cancel()
+      this.$parent.pulldata()
     },
     cancel() {
       this.dialogVisible = false;
