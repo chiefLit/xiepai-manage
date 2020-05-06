@@ -6,7 +6,7 @@
           <el-button type="primary" icon="el-icon-search" @click="pulldata">新增</el-button>
         </el-col>
       </el-row>
-    </el-form> -->
+    </el-form>-->
 
     <el-table :data="dataList" style="width: 100%">
       <el-table-column label="序号" width="50px">
@@ -19,7 +19,7 @@
       </el-table-column>
       <!-- <el-table-column label="创建时间">
         <template slot-scope="scope">{{scope.row.createTime | parseTime}}</template>
-      </el-table-column> -->
+      </el-table-column>-->
       <el-table-column label="操作" width="180px">
         <template slot-scope="scope">
           <el-button type="text" @click="edit(scope.row)">编辑</el-button>
@@ -38,14 +38,14 @@
       :total="totalRecords"
     ></el-pagination>
 
-    <RoleForm v-model="showRoleForm" :data="currItem"/>
+    <RoleForm v-model="showRoleForm" :data="currItem" />
   </div>
 </template>
 
 <script>
 import * as userApi from "@/api/user";
 
-import RoleForm from "./components/role-form"
+import RoleForm from "./components/role-form";
 
 export default {
   name: "role-search",
@@ -59,7 +59,7 @@ export default {
       },
       pageSizes: [20, 40, 80],
       totalRecords: 0,
-      
+
       dataList: [],
       currItem: {}
     };
@@ -70,21 +70,15 @@ export default {
   methods: {
     async pulldata() {
       const data = await userApi.getRoleList(this.formParams);
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.dataList = data.object;
-        this.totalRecords = data.page.totalRecords;
-      }
+      this.dataList = data.object;
+      this.totalRecords = data.page.totalRecords;
     },
     edit(item) {
-      console.log(item)
+      console.log(item);
       this.currItem = item;
-      this.showRoleForm = true
+      this.showRoleForm = true;
     },
-    setMenu(item) {
-
-    }
+    setMenu(item) {}
   }
 };
 </script>

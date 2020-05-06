@@ -77,9 +77,9 @@ export default {
     return {
       showUserForm: false,
       formParams: {
-        id: '',
-        userName: '',
-        realName: '',
+        id: "",
+        userName: "",
+        realName: "",
         currentPage: 1,
         pageSize: 20
       },
@@ -95,38 +95,30 @@ export default {
   methods: {
     async pulldata() {
       const data = await userApi.getUserList(this.formParams);
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.dataList = data.object;
-        this.totalRecords = data.page.totalRecords;
-      }
+      this.dataList = data.object;
+      this.totalRecords = data.page.totalRecords;
     },
     createUser() {
-      this.showUserForm = true
+      this.showUserForm = true;
       this.currUser = {};
     },
     edit(item) {
       this.currUser = item;
-      this.showUserForm = true
+      this.showUserForm = true;
     },
     async resetPassword(item) {
-      this.$confirm('此操作将永久初始化当前用户密码, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
+      this.$confirm("此操作将永久初始化当前用户密码, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       }).then(async () => {
-        const data = await userApi.restPassword({ id: item.id })
-        if (data.code !== 1) {
-          this.$message.error(data.message)
-        } else {
-          this.$message.success('重置密码成功')
-        }
-      })
+        const data = await userApi.restPassword({ id: item.id });
+        this.$message.success("重置密码成功");
+      });
     },
     reset(formName) {
       this.$refs[formName].resetFields();
-    },
+    }
   }
 };
 </script>

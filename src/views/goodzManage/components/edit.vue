@@ -1,14 +1,14 @@
 <template>
   <div class="goodz-edit-wrapper">
-    <el-dialog title="商品编辑" :visible.sync="editDialogVisible" width="400px">
-      <el-form
-        ref="goodzEditForm"
-        label-width="150px"
-        size="mini"
-        label-position="right"
-        :inline="true"
-        :model="detail"
-      >
+    <el-form
+      ref="goodzEditForm"
+      label-width="150px"
+      size="mini"
+      label-position="right"
+      :inline="true"
+      :model="detail"
+    >
+      <el-dialog title="商品编辑" :visible.sync="editDialogVisible" width="400px">
         <el-form-item label="商品名称" size="mini">{{detail.title}}</el-form-item>
         <el-form-item label="商品类别" size="mini">{{{0: '服务类', 1: '商品类'}[detail.type]}}</el-form-item>
         <el-form-item label="商品类型" size="mini">{{detail.optionType}}</el-form-item>
@@ -30,13 +30,13 @@
         >
           <el-input-number v-model="item.price" :controls="false"></el-input-number>
         </el-form-item>
-        
-        <el-form-item>
+
+        <span slot="footer" class="dialog-footer">
           <el-button @click="editCancel">取 消</el-button>
           <el-button type="primary" @click="editSure('goodzEditForm')">确 定</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+        </span>
+      </el-dialog>
+    </el-form>
   </div>
 </template>
 <script>
@@ -72,11 +72,7 @@ export default {
   methods: {
     async getDetail() {
       const data = await goodzApi.getGoodzDetail({ goodzId: this.editItem.id });
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.detail = data.object;
-      }
+      this.detail = data.object;
     },
     async updateGoodz() {
       let params = {
@@ -91,12 +87,8 @@ export default {
         });
       });
       const data = await goodzApi.updateGoodz(params);
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.$message.success(`修改成功`);
-        this.editCancel();
-      }
+      this.$message.success(`修改成功`);
+      this.editCancel();
     },
     editCancel() {
       this.editDialogVisible = false;

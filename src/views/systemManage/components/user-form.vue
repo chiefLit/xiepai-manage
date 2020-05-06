@@ -17,8 +17,8 @@
               v-for="item in storeOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
-            </el-option>
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="status" label="账号状态" size="mini">
@@ -27,13 +27,21 @@
               v-for="item in statusOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
-            </el-option>
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item prop="roleIds" label="用户角色" size="mini">
-          <el-input v-model="userData.roleIds"></el-input>
-        </el-form-item> -->
+        <el-form-item prop="roleIds" label="用户角色" size="mini">
+          <!-- <el-input v-model="userData.roleIds"></el-input> -->
+          <el-select v-model="userData.roleIds" multiple placeholder="请选择">
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <span slot="footer" class="dialog-footer">
           <el-button @click="cancel">取消</el-button>
           <el-button type="primary" @click="submit">确定</el-button>
@@ -60,11 +68,12 @@ export default {
     return {
       title: "",
       statusOptions: [
-        { label: '正常', value: 0 },
-        { label: '禁用', value: -1 },
+        { label: "正常", value: 0 },
+        { label: "禁用", value: -1 }
       ],
       userData: {},
-      storeOptions:[],
+      storeOptions: [],
+      roleOptions: [],
       dialogVisible: false
     };
   },
@@ -74,19 +83,22 @@ export default {
     },
     dialogVisible(val) {
       this.$emit("input", val);
-      if (val) this.userData = this.data.id ? { ...this.data } : {
-        userName: '', 
-        realName: '', 
-        phone: '',
-        storeId: 1, 
-        status: 0, 
-        roleIds: []
-      }
-      if (val) this.title = this.data.id ? '编辑用户' : '新增用户'
+      if (val)
+        this.userData = this.data.id
+          ? { ...this.data }
+          : {
+              userName: "",
+              realName: "",
+              phone: "",
+              storeId: 1,
+              status: 0,
+              roleIds: []
+            };
+      if (val) this.title = this.data.id ? "编辑用户" : "新增用户";
     }
   },
-  mounted(){
-    this.getStoreList()
+  mounted() {
+    this.getStoreList();
   },
   methods: {
     async getStoreList() {
@@ -94,26 +106,29 @@ export default {
         currentPage: 1,
         pageSize: 200
       });
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.storeOptions = data.object.map(ele => {
-          return {
-            label: ele.name,
-            value: ele.id,
-          }
-        })
-        console.log(JSON.stringify(this.statusOptions))
-        console.log(JSON.stringify(this.storeOptions))
-      }
+      this.storeOptions = data.object.map(ele => {
+        return {
+          label: ele.name,
+          value: ele.id
+        };
+      });
+    },
+    async getRoleList() {
+      const data = userApi.getRoleList({ currentPage: 1, pageSize: 20 });
+      this.roleOptions = data.object.map(item => {
+        return {
+          label: item.name,
+          value: item.id
+        };
+      });
     },
     async submit() {
-      const promise = this.data.id ? userApi.updateUser : userApi.createUser
-      const data = await promise(this.userData)
+      const promise = this.data.id ? userApi.updateUser : userApi.createUser;
+      const data = await promise(this.userData);
     },
     cancel() {
-      this.dialogVisible = false
-    },
+      this.dialogVisible = false;
+    }
   }
 };
 </script>

@@ -3,7 +3,11 @@
     <el-dialog title="确认完成" :visible.sync="showDialog" width="80%">
       <el-form ref="form" label-width="120px">
         <el-tabs class="order-sub-list" shadow="never">
-          <el-tab-pane v-for="(item, index) in data.orderSubVoList" :key="index" :label='item.goodzTitle'>
+          <el-tab-pane
+            v-for="(item, index) in data.orderSubVoList"
+            :key="index"
+            :label="item.goodzTitle"
+          >
             <el-row :gutter="0">
               <el-col :span="6">
                 <el-form-item label="鞋子品牌">
@@ -25,7 +29,14 @@
             <el-row class="image-card-container" :gutter="20">
               <template v-for="(sub, subIndex) in imageLists[index]">
                 <div class="mr20" :key="subIndex">
-                  <el-upload class="image-uploader" :show-file-list='false' action="" accept="image/*" :http-request="httpRequestEx" :on-success="(value)=> onSuccess(value, index, subIndex)">
+                  <el-upload
+                    class="image-uploader"
+                    :show-file-list="false"
+                    action
+                    accept="image/*"
+                    :http-request="httpRequestEx"
+                    :on-success="(value)=> onSuccess(value, index, subIndex)"
+                  >
                     <el-image v-if="sub.url" :src="sub.url" fit="cover"></el-image>
                     <i v-else class="el-icon-plus"></i>
                   </el-upload>
@@ -38,7 +49,12 @@
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item label="备注">
-                  <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="formParams.serviceResultSubParamList[index].remark"></el-input>
+                  <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="formParams.serviceResultSubParamList[index].remark"
+                  ></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -50,14 +66,24 @@
           <el-col :span="6">
             <el-form-item label="寄回方式">
               <el-select v-model="sendWay" placeholder="请选择" disabled>
-                <el-option v-for="item in sendWayList" :key="item.value" :label="item.label" :value="item.value" />
+                <el-option
+                  v-for="item in sendWayList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="物流公司">
               <el-select v-model="formParams.toUserExpressId" placeholder="请选择">
-                <el-option v-for="item in expressCompanyList" :key="item.value" :label="item.label" :value="item.value" />
+                <el-option
+                  v-for="item in expressCompanyList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
           </el-col>
@@ -76,7 +102,9 @@
             <el-form-item label="手机号码">{{data.userAddressVo.phone}}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="详细地址">{{data.userAddressVo.provinceName}} {{data.userAddressVo.cityName}} {{data.userAddressVo.countyName}} {{data.userAddressVo.address}}</el-form-item>
+            <el-form-item
+              label="详细地址"
+            >{{data.userAddressVo.provinceName}} {{data.userAddressVo.cityName}} {{data.userAddressVo.countyName}} {{data.userAddressVo.address}}</el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -88,9 +116,9 @@
   </div>
 </template>
 <script>
-import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
-import * as commonApi from '@/api/common'
-import * as orderApi from '@/api/order'
+import { statusToValue, channelToValue, aspectToValue } from "@/globalConfig";
+import * as commonApi from "@/api/common";
+import * as orderApi from "@/api/order";
 export default {
   props: {
     value: {
@@ -99,7 +127,7 @@ export default {
     },
     data: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   data() {
@@ -112,9 +140,9 @@ export default {
 
       sendWay: 1,
       sendWayList: [
-        { value: 1, label: '快递' },
-        { value: 2, label: '平台配送' },
-        { value: 3, label: '客户上门自取' },
+        { value: 1, label: "快递" },
+        { value: 2, label: "平台配送" },
+        { value: 3, label: "客户上门自取" }
       ],
       expressCompanyList: [],
 
@@ -123,70 +151,70 @@ export default {
         orderId: null, //	是	int	订单ID
         toUserExpressId: null, //	是	int	选中的快递公司ID
         toUserExpressNumber: null, //	是	String	快递单号
-        serviceResultSubParamList: [], //	是	list	ServiceResultSubParam 组成的list，ServiceResultSubParam说明
+        serviceResultSubParamList: [] //	是	list	ServiceResultSubParam 组成的list，ServiceResultSubParam说明
       }
-    }
+    };
   },
   watch: {
     value(val) {
-      this.showDialog = val
+      this.showDialog = val;
     },
     showDialog(val) {
-      this.$emit('input', val)
+      this.$emit("input", val);
     }
   },
   beforeMount() {
-    this.getExpressCompanyList()
+    this.getExpressCompanyList();
 
-      this.imageLists = this.data.orderSubVoList.map(ele => [{ 'url': '' }, { 'url': '' }, { 'url': '' }, { 'url': '' }])
+    this.imageLists = this.data.orderSubVoList.map(ele => [
+      { url: "" },
+      { url: "" },
+      { url: "" },
+      { url: "" }
+    ]);
 
-      const serviceResultSubParamList = this.data.orderSubVoList.map(ele => {
-        return {
-          orderSubId: ele.id, //	是	int	子订单ID
-          completeRemark: '', //	否	string	正面照片
-          image0: '', //	是	string	正面照片
-          image1: '', //	是	string	背面照片
-          image2: '', //	是	string	侧面照片
-          image3: '' //	是	string	底部照片
-        }
-      })
+    const serviceResultSubParamList = this.data.orderSubVoList.map(ele => {
+      return {
+        orderSubId: ele.id, //	是	int	子订单ID
+        completeRemark: "", //	否	string	正面照片
+        image0: "", //	是	string	正面照片
+        image1: "", //	是	string	背面照片
+        image2: "", //	是	string	侧面照片
+        image3: "" //	是	string	底部照片
+      };
+    });
 
-      this.formParams.orderId = this.data.id;
-      this.formParams.serviceResultSubParamList = serviceResultSubParamList;
+    this.formParams.orderId = this.data.id;
+    this.formParams.serviceResultSubParamList = serviceResultSubParamList;
   },
   methods: {
     close() {
-      this.showDialog = false
+      this.showDialog = false;
     },
     // 获取快递公司列表
     async getExpressCompanyList() {
-      const data = await commonApi.getExpressCompanyList()
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.expressCompanyList = data.object.map(ele => {
-          return {
-            value: ele.id,
-            label: ele.name
-          }
-        })
-      }
+      const data = await commonApi.getExpressCompanyList();
+      this.expressCompanyList = data.object.map(ele => {
+        return {
+          value: ele.id,
+          label: ele.name
+        };
+      });
     },
     httpRequestEx(obj) {
-      return commonApi.uploadFile(obj.file, null)
+      return commonApi.uploadFile(obj.file, null);
     },
     onSuccess(data, index, subIndex) {
-      // console.log(data)
-      if (data.code !== 1) {
-        this.message.error(data.message)
-      } else {
-        this.imageLists[index][subIndex].url = data.object.viewPath;
-        this.$forceUpdate();
-      }
+      this.imageLists[index][subIndex].url = data.object.viewPath;
+      this.$forceUpdate();
     },
     calcParams() {
-      let errorMessage = ""
-      for (let i = 0; i < this.formParams.serviceResultSubParamList.length; i++) {
+      let errorMessage = "";
+      for (
+        let i = 0;
+        i < this.formParams.serviceResultSubParamList.length;
+        i++
+      ) {
         const ele = this.formParams.serviceResultSubParamList[i];
 
         let shouldBreak = false;
@@ -194,46 +222,42 @@ export default {
         for (let j = 0; j < this.imageLists[i].length; j++) {
           const sub = this.imageLists[i][j];
           if (sub.url) {
-            ele[`image${j}`] = sub.url
+            ele[`image${j}`] = sub.url;
           } else {
-            errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`
+            errorMessage = `第${i + 1}双鞋的第${j + 1}张照片没有上传`;
             shouldBreak = true;
-            break
+            break;
           }
         }
-        if (shouldBreak) break
+        if (shouldBreak) break;
       }
       if (errorMessage) {
-        this.$message.error(errorMessage)
-        return false
+        this.$message.error(errorMessage);
+        return false;
       }
       if (!this.formParams.toUserExpressId) {
-        errorMessage = errorMessage || '请选择物流公司'
+        errorMessage = errorMessage || "请选择物流公司";
       }
       if (!this.formParams.toUserExpressNumber) {
-        errorMessage = errorMessage || '请填写物流单号'
+        errorMessage = errorMessage || "请填写物流单号";
       }
       if (errorMessage) {
-        this.$message.error(errorMessage)
-        return false
+        this.$message.error(errorMessage);
+        return false;
       } else {
-        return true
+        return true;
       }
     },
 
     async submit() {
-      if (!this.calcParams()) return
-      const data = await orderApi.serviceResult(this.formParams)
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.$message.success('提交成功')
-        this.$emit('reload-page')
-        this.close()
-      }
+      if (!this.calcParams()) return;
+      const data = await orderApi.serviceResult(this.formParams);
+      this.$message.success("提交成功");
+      this.$emit("reload-page");
+      this.close();
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .popup-comfirm-send-wrapper {

@@ -162,28 +162,20 @@ export default {
   methods: {
     async pulldata() {
       const data = await fundlogApi.findPlatformFundlog(this.formParams);
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.dataList = data.object;
-        this.totalRecords = data.page.totalRecords;
-        this.amountDesc = `当前汇总：总金额：${data.map.sumAmount || '0.00'} 笔数：${data.map.count || '0'} 笔`
-      }
+      this.dataList = data.object;
+      this.totalRecords = data.page.totalRecords;
+      this.amountDesc = `当前汇总：总金额：${data.map.sumAmount || '0.00'} 笔数：${data.map.count || '0'} 笔`
     },
 
     async getStoreList() {
       const data = await storeApi.getStoreList({ currentPage: 1, pageSize: 20 });
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        const storeList = data.object.map(ele => {
-          return {
-            label: ele.name,
-            value: ele.id
-          };
-        });
-        this.storeList = [{ label: "全部", value: null }, ...storeList];
-      }
+      const storeList = data.object.map(ele => {
+        return {
+          label: ele.name,
+          value: ele.id
+        };
+      });
+      this.storeList = [{ label: "全部", value: null }, ...storeList];
     },
 
     reset(formName) {

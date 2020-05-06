@@ -82,119 +82,115 @@ export default {
   methods: {
     async pullData() {
       const data = await orderApi.getOrderDetail({ orderId: this.$route.query.id });
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.data = data.object;
-        // 基础信息
-        this.dataBaseInfo = {
-          number: data.object.number,
-          applyTime: data.object.applyTime,
-          channel: data.object.channel,
-          phone: data.object.phone,
-          status: data.object.status,
-          endTime: data.object.endTime,
-          userAddressVo: { ...data.object.userAddressVo }
-        }
-
-        // 订单详情
-        this.dataOrderDetail = {
-          id: this.$route.query.id,
-          orderSubVoList: [...data.object.orderSubVoList],
-          userAddressVo: { ...data.object.userAddressVo },
-          couponAmount: data.object.couponAmount,
-          realPayAmount: data.object.realPayAmount,
-          payOrderNumber: data.object.payOrderNumber
-        }
-
-        // 客户寄鞋快递
-        if ([1, 2, 3, 4, 5, 6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
-          if (data.object.status === -1 && !data.object.toStoreExpressNumber) return
-          this.dataExpressForm = {
-            id: this.$route.query.id,
-            toStoreExpressName: data.object.toStoreExpressName,
-            toStoreExpressNumber: data.object.toStoreExpressNumber
-          }
-        }
-
-        // 客户收鞋快递
-        if ([6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
-          if (data.object.status === -1 && !data.object.toUserExpressNumber) return
-          this.dataExpressTo = {
-            id: this.$route.query.id,
-            toUserExpressName: data.object.toUserExpressName,
-            toUserExpressNumber: data.object.toUserExpressNumber
-          }
-        }
-
-        // 收鞋后质检
-        if ([4, 5, 6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
-          if (data.object.status === -1) return
-          this.dataShoesReceive = {
-            orderId: data.object.id,
-            toUserExpressId: data.object.toUserExpressId,
-            toUserExpressNumber: data.object.toUserExpressNumber,
-            serviceResultSubParamList: data.object.orderSubVoList.map(ele => {
-              return {
-                // int	子订单ID
-                orderSubId: ele.id,
-                goodzTitle: ele.goodzTitle,
-                // string	品牌
-                brand: ele.orderStoreCollectVo.brand,
-                // string	系列
-                model: ele.orderStoreCollectVo.model,
-                // double	评估价
-                amount: ele.orderStoreCollectVo.amount,
-                // string	备注
-                remark: ele.orderStoreCollectVo.remark,
-                // string	正面照片
-                image0Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 0).url,
-                // string	背面照片
-                image1Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 1).url,
-                // string	侧面照片
-                image2Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 2).url,
-                // string	底面照片
-                image3Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 3).url,
-              }
-            })
-          }
-        }
-
-        // 寄鞋前质检
-        if ([6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
-          if (data.object.status === -1) return
-          this.dataShoesSend = {
-            orderId: data.object.id,
-            toUserExpressId: data.object.toUserExpressId,
-            toUserExpressNumber: data.object.toUserExpressNumber,
-            storeCollectSubParamList: data.object.orderSubVoList.map(ele => {
-              return {
-                // int	子订单ID
-                orderSubId: ele.id,
-                goodzTitle: ele.goodzTitle,
-                // string	品牌
-                brand: ele.orderStoreCollectVo.brand,
-                // string	系列
-                model: ele.orderStoreCollectVo.model,
-                // double	评估价
-                amount: ele.orderStoreCollectVo.amount,
-                // string	备注
-                remark: ele.orderStoreCollectVo.remark,
-                // string	正面照片
-                image0Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 0).url,
-                // string	背面照片
-                image1Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 1).url,
-                // string	侧面照片
-                image2Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 2).url,
-                // string	底面照片
-                image3Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 3).url,
-              }
-            })
-          }
-        }
-        // 订单日志
-        this.dataOrderLogs = [...data.object.orderLogVos]
+      this.data = data.object;
+      // 基础信息
+      this.dataBaseInfo = {
+        number: data.object.number,
+        applyTime: data.object.applyTime,
+        channel: data.object.channel,
+        phone: data.object.phone,
+        status: data.object.status,
+        endTime: data.object.endTime,
+        userAddressVo: { ...data.object.userAddressVo }
       }
+
+      // 订单详情
+      this.dataOrderDetail = {
+        id: this.$route.query.id,
+        orderSubVoList: [...data.object.orderSubVoList],
+        userAddressVo: { ...data.object.userAddressVo },
+        couponAmount: data.object.couponAmount,
+        realPayAmount: data.object.realPayAmount,
+        payOrderNumber: data.object.payOrderNumber
+      }
+
+      // 客户寄鞋快递
+      if ([1, 2, 3, 4, 5, 6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
+        if (data.object.status === -1 && !data.object.toStoreExpressNumber) return
+        this.dataExpressForm = {
+          id: this.$route.query.id,
+          toStoreExpressName: data.object.toStoreExpressName,
+          toStoreExpressNumber: data.object.toStoreExpressNumber
+        }
+      }
+
+      // 客户收鞋快递
+      if ([6, 7, 8, 9, -2].some(ele => ele === data.object.status)) {
+        if (data.object.status === -1 && !data.object.toUserExpressNumber) return
+        this.dataExpressTo = {
+          id: this.$route.query.id,
+          toUserExpressName: data.object.toUserExpressName,
+          toUserExpressNumber: data.object.toUserExpressNumber
+        }
+      }
+
+      // 收鞋后质检
+      if ([4, 5, 6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
+        if (data.object.status === -1) return
+        this.dataShoesReceive = {
+          orderId: data.object.id,
+          toUserExpressId: data.object.toUserExpressId,
+          toUserExpressNumber: data.object.toUserExpressNumber,
+          serviceResultSubParamList: data.object.orderSubVoList.map(ele => {
+            return {
+              // int	子订单ID
+              orderSubId: ele.id,
+              goodzTitle: ele.goodzTitle,
+              // string	品牌
+              brand: ele.orderStoreCollectVo.brand,
+              // string	系列
+              model: ele.orderStoreCollectVo.model,
+              // double	评估价
+              amount: ele.orderStoreCollectVo.amount,
+              // string	备注
+              remark: ele.orderStoreCollectVo.remark,
+              // string	正面照片
+              image0Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 0).url,
+              // string	背面照片
+              image1Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 1).url,
+              // string	侧面照片
+              image2Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 2).url,
+              // string	底面照片
+              image3Url: ele.serviceImageList.find(ele => ele.step === 1 && ele.aspect === 3).url,
+            }
+          })
+        }
+      }
+
+      // 寄鞋前质检
+      if ([6, 7, 8, 9, -1, -2].some(ele => ele === data.object.status)) {
+        if (data.object.status === -1) return
+        this.dataShoesSend = {
+          orderId: data.object.id,
+          toUserExpressId: data.object.toUserExpressId,
+          toUserExpressNumber: data.object.toUserExpressNumber,
+          storeCollectSubParamList: data.object.orderSubVoList.map(ele => {
+            return {
+              // int	子订单ID
+              orderSubId: ele.id,
+              goodzTitle: ele.goodzTitle,
+              // string	品牌
+              brand: ele.orderStoreCollectVo.brand,
+              // string	系列
+              model: ele.orderStoreCollectVo.model,
+              // double	评估价
+              amount: ele.orderStoreCollectVo.amount,
+              // string	备注
+              remark: ele.orderStoreCollectVo.remark,
+              // string	正面照片
+              image0Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 0).url,
+              // string	背面照片
+              image1Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 1).url,
+              // string	侧面照片
+              image2Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 2).url,
+              // string	底面照片
+              image3Url: ele.serviceImageList.find(ele => ele.step === 2 && ele.aspect === 3).url,
+            }
+          })
+        }
+      }
+      // 订单日志
+      this.dataOrderLogs = [...data.object.orderLogVos]
     },
     cancelOrder() {
       this.$confirm('确定删除该订单?', '提示', {
@@ -203,12 +199,8 @@ export default {
         type: 'warning'
       }).then(async () => {
         const data = await orderApi.orderCancel({ orderId: this.$route.query.id })
-        if (data.code !== 1) {
-          this.$message.error(data.message)
-        } else {
-          this.$message.success('订单已取消')
-          this.pullData()
-        }
+        this.$message.success('订单已取消')
+        this.pullData()
       })
     },
     completeOrder() { },

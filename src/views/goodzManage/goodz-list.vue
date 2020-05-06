@@ -133,27 +133,19 @@ export default {
   methods: {
     async pulldata() {
       const data = await goodzApi.getGoodzList(this.formParams);
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        this.dataList = data.object;
-        this.totalRecords = data.page.totalRecords;
-      }
+      this.dataList = data.object;
+      this.totalRecords = data.page.totalRecords;
     },
 
     async getStoreList() {
       const data = await storeApi.getStoreList({ currentPage: 1, pageSize: 20 });
-      if (data.code !== 1) {
-        this.$message.error(data.message);
-      } else {
-        const storeList = data.object.map(ele => {
-          return {
-            label: ele.name,
-            value: ele.id
-          };
-        });
-        this.storeList = [{ label: "全部", value: null }, ...storeList];
-      }
+      const storeList = data.object.map(ele => {
+        return {
+          label: ele.name,
+          value: ele.id
+        };
+      });
+      this.storeList = [{ label: "全部", value: null }, ...storeList];
     },
 
     filter() {

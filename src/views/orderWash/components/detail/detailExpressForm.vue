@@ -11,19 +11,19 @@
       </el-col>
     </el-row>
     <!-- <div cl v-if="orderExpressErrorReason">{{orderExpressErrorReason}}</div> -->
-    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog"/>
+    <expressInfo :data.sync="orderExpressLog" v-if="orderExpressLog" />
   </el-card>
 </template>
 <script>
-import { statusToValue, channelToValue, aspectToValue } from '@/globalConfig'
-import expressInfo from './expressInfo'
-import * as orderApi from '@/api/order'
+import { statusToValue, channelToValue, aspectToValue } from "@/globalConfig";
+import expressInfo from "./expressInfo";
+import * as orderApi from "@/api/order";
 export default {
   components: { expressInfo },
   props: {
     data: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   data() {
@@ -33,10 +33,10 @@ export default {
       aspectToValue,
 
       orderExpressLog: {}
-    }
+    };
   },
   mounted() {
-    this.findOrderExpressLog()
+    this.findOrderExpressLog();
   },
   methods: {
     async findOrderExpressLog() {
@@ -44,22 +44,18 @@ export default {
       const data = await orderApi.findOrderExpressLog({
         orderId: this.data.id,
         trend: 0
-      })
-      if (data.code !== 1) {
-        this.$message.error(data.message)
+      });
+      if (data.object && data.object.content) {
+        const expressData = JSON.parse(data.object.content);
+        this.orderExpressLog = expressData;
       } else {
-        if (data.object && data.object.content) {
-          const expressData = JSON.parse(data.object.content);
-          this.orderExpressLog = expressData
-        } else {
-          this.orderExpressLog = {
-            reason: '无物流信息'
-          }
-        }
+        this.orderExpressLog = {
+          reason: "无物流信息"
+        };
       }
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .iframe-box {

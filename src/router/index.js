@@ -58,7 +58,7 @@ export const constantRoutes = [
     component: Layout,
     name: 'orderWash',
     redirect: '/order/wash/all',
-    meta: { title: '洗鞋订单', icon: 'example' },
+    meta: { title: '洗鞋订单', icon: 'form' },
     children: [
       {
         path: 'all',
@@ -111,7 +111,7 @@ export const constantRoutes = [
     component: Layout,
     name: 'goodz',
     redirect: '/goodz/list',
-    meta: { title: '商品管理', icon: 'example' },
+    meta: { title: '商品管理', icon: 'dashboard' },
     children: [
       {
         path: 'list',
@@ -127,7 +127,7 @@ export const constantRoutes = [
     component: Layout,
     name: 'financialManage',
     redirect: '/financial-manage/user',
-    meta: { title: '财务管理', icon: 'example' },
+    meta: { title: '财务管理', icon: 'nested' },
     children: [
       {
         path: 'platform',
@@ -149,7 +149,7 @@ export const constantRoutes = [
     component: Layout,
     name: 'systemManage',
     redirect: '/system-manage/user',
-    meta: { title: '系统管理', icon: 'example' },
+    meta: { title: '系统管理', icon: 'tree' },
     children: [
       {
         path: 'user',

@@ -11,8 +11,8 @@
               v-for="item in statusOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
-            </el-option>
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
         <span slot="footer" class="dialog-footer">
@@ -41,12 +41,12 @@ export default {
     return {
       title: "编辑角色",
       statusOptions: [
-        { label: '正常', value: 0 },
-        { label: '禁用', value: -1 },
+        { label: "正常", value: 0 },
+        { label: "禁用", value: -1 }
       ],
       roleData: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
         status: 0,
         menus: []
       },
@@ -64,24 +64,16 @@ export default {
   },
   methods: {
     async getDetail() {
-      const data = await userApi.getRoleDetail({ id: this.data.id })
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.roleData = data.object
-      }
+      const data = await userApi.getRoleDetail({ id: this.data.id });
+      this.roleData = data.object;
     },
     async submit() {
       const data = await userApi.updateRole(this.roleData);
-      if (data.code !== 1) {
-        this.$message.error(data.message)
-      } else {
-        this.$message.success('修改角色成功')
-      }
+      this.$message.success("修改角色成功");
     },
     cancel() {
-      this.dialogVisible = false
-    },
+      this.dialogVisible = false;
+    }
   }
 };
 </script>
