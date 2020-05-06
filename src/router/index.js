@@ -56,51 +56,51 @@ export const constantRoutes = [
   {
     path: '/order/wash',
     component: Layout,
-    name: 'orderWash',
+    name: 'order.wash',
     redirect: '/order/wash/all',
-    meta: { title: '洗鞋订单', icon: 'form' },
+    meta: { title: '洗鞋订单', icon: 'form', routeable: true },
     children: [
       {
         path: 'all',
-        name: 'orderWashAll',
+        name: 'order.wash.all',
         component: () => import('@/views/orderWash/orderList.all'),
-        meta: { title: '全部' }
+        meta: { title: '全部', routeable: true }
       },
       {
         path: 'waitCustomerPay',
-        name: 'orderWashWaitCustomerPay',
+        name: 'order.wash.waitCustomerPay',
         component: () => import('@/views/orderWash/orderList.waitCustomerPay'),
-        meta: { title: '待支付' }
+        meta: { title: '待支付', routeable: true }
       },
       {
         path: 'waitCustomerSend',
-        name: 'orderWashWaitCustomerSend',
+        name: 'order.wash.waitCustomerSend',
         component: () => import('@/views/orderWash/orderList.waitCustomerSend'),
-        meta: { title: '待客户寄鞋' }
+        meta: { title: '待客户寄鞋', routeable: true }
       },
       {
         path: 'waitReceipt',
-        name: 'orderWashWaitReceipt',
+        name: 'order.wash.waitReceipt',
         component: () => import('@/views/orderWash/orderList.waitReceipt'),
-        meta: { title: '待接收' }
+        meta: { title: '待接收', routeable: true }
       },
       {
         path: 'doWash',
-        name: 'orderWashDoWash',
+        name: 'order.wash.doWash',
         component: () => import('@/views/orderWash/orderList.doWash'),
-        meta: { title: '处理中' }
+        meta: { title: '处理中', routeable: true }
       },
       {
         path: 'waitCustomerReceipt',
-        name: 'orderWashWaitCustomerReceipt',
+        name: 'order.wash.waitCustomerReceipt',
         component: () => import('@/views/orderWash/orderList.waitCustomerReceipt'),
-        meta: { title: '待客户收鞋' }
+        meta: { title: '待客户收鞋', routeable: true }
       },
       {
         path: 'detail',
-        name: 'orderWashDetail',
+        name: 'order.wash.detail',
         component: () => import('@/views/orderWash/orderDetail'),
-        meta: { title: '详情' },
+        meta: { title: '详情', routeable: true },
         hidden: true
       }
     ]
@@ -111,13 +111,13 @@ export const constantRoutes = [
     component: Layout,
     name: 'goodz',
     redirect: '/goodz/list',
-    meta: { title: '商品管理', icon: 'dashboard' },
+    meta: { title: '商品管理', icon: 'dashboard', routeable: true },
     children: [
       {
         path: 'list',
         name: 'goodz.list',
         component: () => import('@/views/goodzManage/goodz-list'),
-        meta: { title: '商品管理' }
+        meta: { title: '商品管理', routeable: true }
       }
     ]
   },
@@ -127,19 +127,19 @@ export const constantRoutes = [
     component: Layout,
     name: 'financialManage',
     redirect: '/financial-manage/user',
-    meta: { title: '财务管理', icon: 'nested' },
+    meta: { title: '财务管理', icon: 'nested', routeable: true },
     children: [
       {
         path: 'platform',
         name: 'financialManage.platform',
         component: () => import('@/views/financialManage/financial-platform'),
-        meta: { title: '平台流水' }
+        meta: { title: '平台流水', routeable: true }
       },
       {
         path: 'store',
         name: 'financialManage.store',
         component: () => import('@/views/financialManage/financial-store'),
-        meta: { title: '店铺流水' }
+        meta: { title: '店铺流水', routeable: true }
       }
     ]
   },
@@ -149,25 +149,25 @@ export const constantRoutes = [
     component: Layout,
     name: 'systemManage',
     redirect: '/system-manage/user',
-    meta: { title: '系统管理', icon: 'tree' },
+    meta: { title: '系统管理', icon: 'tree', routeable: true },
     children: [
       {
         path: 'user',
         name: 'systemManage.user',
         component: () => import('@/views/systemManage/user-manage'),
-        meta: { title: '用户管理' }
+        meta: { title: '用户管理', routeable: true }
       },
       {
         path: 'role',
         name: 'systemManage.role',
         component: () => import('@/views/systemManage/role-manage'),
-        meta: { title: '角色管理' }
+        meta: { title: '角色管理', routeable: true }
       },
       {
         path: 'store',
         name: 'systemManage.store',
         component: () => import('@/views/systemManage/store-manage'),
-        meta: { title: '店铺管理' }
+        meta: { title: '店铺管理', routeable: true }
       }
     ]
   },
@@ -279,6 +279,7 @@ export const constantRoutes = [
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
+
 
 const createRouter = () => new Router({
   mode: 'history', // require service support

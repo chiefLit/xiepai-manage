@@ -72,6 +72,15 @@ export function getTreeList(data) {
   })
 }
 
+// 获取用户信息
+export function getUserInfo(data) {
+  return request({
+    url: '/api/bgms/user/getInfo',
+    method: 'post',
+    data
+  })
+}
+
 // export function getInfo(token) {
 //   return request({
 //     url: '/user/info',

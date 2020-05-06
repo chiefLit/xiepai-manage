@@ -24,14 +24,33 @@ import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
+import * as userApi from '@/api/user'
+
+function handlerRoutes(items, menus) {
+  return items
+    .filter(item => menus.find(menu => menu === item.name))
+    .map(item => {
+      if (item.meta && item.meta.routeable) {
+        let res = { ...item };
+        if (item.children) res.children = handlerRoutes(item.children, menus);
+        return res;
+      }
+    });
+}
+
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      menus: []
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
     routes() {
-      return this.$router.options.routes
+      return handlerRoutes(this.$router.options.routes, this.menus)
     },
     activeMenu() {
       const route = this.$route
@@ -50,6 +69,15 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    }
+  },
+  beforeMount() {
+    this.getUserInfo()
+  },
+  methods: {
+    async getUserInfo() {
+      const data = await userApi.getUserInfo()
+      this.menus = data.object.menus;
     }
   }
 }

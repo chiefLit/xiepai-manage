@@ -38,7 +38,8 @@
       :total="totalRecords"
     ></el-pagination>
 
-    <RoleForm v-model="showRoleForm" :data="currItem" />
+    <RoleForm v-model="showRoleForm" :data="currEditItem" />
+    <RoleTree v-model="showRoleTree" :data="currTreeItem" />
   </div>
 </template>
 
@@ -46,13 +47,15 @@
 import * as userApi from "@/api/user";
 
 import RoleForm from "./components/role-form";
+import RoleTree from "./components/role-tree";
 
 export default {
   name: "role-search",
-  components: { RoleForm },
+  components: { RoleForm, RoleTree },
   data() {
     return {
       showRoleForm: false,
+      showRoleTree: false,
       formParams: {
         currentPage: 1,
         pageSize: 20
@@ -61,7 +64,8 @@ export default {
       totalRecords: 0,
 
       dataList: [],
-      currItem: {}
+      currEditItem: {},
+      currTreeItem: {},
     };
   },
   beforeMount() {
@@ -74,11 +78,13 @@ export default {
       this.totalRecords = data.page.totalRecords;
     },
     edit(item) {
-      console.log(item);
-      this.currItem = item;
+      this.currEditItem = item;
       this.showRoleForm = true;
     },
-    setMenu(item) {}
+    setMenu(item) {
+      this.currTreeItem = item;
+      this.showRoleTree = true;
+    }
   }
 };
 </script>

@@ -163,7 +163,6 @@ export default {
     async pulldata() {
       const isPlaform = this.$route.name === 'financialManage.platform'
       const promise = isPlaform ? fundlogApi.findPlatformFundlog : fundlogApi.findStoreFundlog
-      console.log(isPlaform)
       const data = await promise(this.formParams);
       this.dataList = data.object;
       this.totalRecords = data.page.totalRecords;
