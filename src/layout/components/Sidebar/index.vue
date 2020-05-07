@@ -12,30 +12,39 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item
+          v-for="route in routes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        />
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+import { mapGetters } from "vuex";
+import Logo from "./Logo";
+import SidebarItem from "./SidebarItem";
+import variables from "@/styles/variables.scss";
 
-import * as userApi from '@/api/user'
+import * as userApi from "@/api/user";
+import * as menuApi from "@/api/menu";
 
-function handlerRoutes(items, menus) {
-  return items
-    .filter(item => menus.find(menu => menu === item.name))
-    .map(item => {
-      if (item.meta && item.meta.routeable) {
-        let res = { ...item };
-        if (item.children) res.children = handlerRoutes(item.children, menus);
-        return res;
-      }
-    });
+function handlerRoutes(totalMenus, allowMenus) {
+  return totalMenus.filter(item => {
+    if (item.meta) {
+      return allowMenus.some(menu => menu.code === item.meta.code );
+    } else {
+      return false;
+    }
+  })
+  .map(item => {
+    let res = { ...item };
+    if (item.children) res.children = handlerRoutes(item.children, allowMenus);
+    return res;
+  });
 }
 
 export default {
@@ -43,42 +52,44 @@ export default {
   data() {
     return {
       menus: []
-    }
+    };
   },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
+    ...mapGetters(["sidebar"]),
     routes() {
-      return handlerRoutes(this.$router.options.routes, this.menus)
+      // return this.$router.options.routes
+      let res = handlerRoutes(this.$router.options.routes, this.menus);
+
+      // console.log(res)
+      return res;
     },
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
+      const route = this.$route;
+      const { meta, path } = route;
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
+      return path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
+      return variables;
     },
     isCollapse() {
-      return !this.sidebar.opened
+      return !this.sidebar.opened;
     }
   },
   beforeMount() {
-    this.getUserInfo()
+    this.getUserInfo();
   },
   methods: {
     async getUserInfo() {
-      const data = await userApi.getUserInfo()
+      const data = await userApi.getUserInfo();
       this.menus = data.object.menus;
     }
   }
-}
+};
 </script>

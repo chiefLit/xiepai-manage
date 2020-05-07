@@ -38,7 +38,7 @@
       </el-row>
 
       <el-row type="flex" align="top" justify="start" :gutter="24">
-        <el-col :span="6" v-if="!statusDisable">
+        <el-col :span="6" v-if="statusable">
           <el-form-item label="订单状态" prop="status">
             <el-select v-model="formParams.status" placeholder="请选择">
               <el-option
@@ -50,14 +50,14 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <!-- <el-col :span="6">
+        <el-col :span="6" v-if="storeable">
           <el-form-item label="门店" prop="storeName">
             <el-select v-model="formParams.storeName" placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              <el-option v-for="item in storeList" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>-->
+        </el-col>
 
         <el-col :span="6">
           <el-button type="primary" icon="el-icon-search" @click="pulldata">搜索</el-button>
@@ -113,6 +113,8 @@
 
 <script>
 import * as orderApi from "@/api/order";
+import * as userApi from "@/api/user";
+import * as storeApi from "@/api/store";
 import { statusToValue, channelToValue, orderOptions } from "@/globalConfig";
 
 export default {
@@ -130,9 +132,10 @@ export default {
 
       pageSizes: [20, 40, 80],
       totalRecords: 0,
-      statusDisable: false,
+      statusable: true,
+      storeable: true,
 
-      options: [{ name: 1, label: "label" }],
+      storeList: [],
       formParams: {
         startTime: null,
         endTime: null,
@@ -166,15 +169,19 @@ export default {
     }
   },
   beforeMount() {
+    this.getStoreList()
     if (this.status !== null && this.status !== undefined) {
       this.formParams.status = this.status;
-      this.statusDisable = true;
+      this.statusable = false;
     }
-    this.pulldata();
+    this.getUserInfo().then(() => {
+      this.pulldata();
+    })
   },
   methods: {
     async pulldata() {
-      const data = await orderApi.getOrderList(this.formParams);
+      const promise = orderApi.getOrderList;
+      const data = await promise(this.formParams);
       this.dataList = data.object;
       this.totalRecords = data.page.totalRecords;
     },
@@ -189,8 +196,25 @@ export default {
 
     toDetail(item) {
       this.$router.push({
-        path: `/order/wash/detail?id=${item.id}`
+        path: `/order-manage/wash/detail?id=${item.id}`
       });
+    },
+
+    async getStoreList() {
+      const data = await storeApi.getStoreList({ currentPage: 1, pageSize: 20 })
+      this.storeList = data.object.map(item => {
+        return {
+          label: item.name,
+          value: item.id
+        }
+      })
+    },
+
+    async getUserInfo() {
+      const data = await userApi.getUserInfo()
+      this.userInfo = data.object;
+      this.storeable = data.object.roleIds.some(role => role === 1)
+      return Promise.resolve()
     }
   }
 };

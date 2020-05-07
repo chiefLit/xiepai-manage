@@ -76,7 +76,7 @@ export function findOrderExpressLog(data) {
  * 门店订单列表 1.1
  * @param {orderId	是	int	订单ID, trend	是	int	走向 0：用户寄给门店 1：门店寄给用户} data 
  */
-export function find2ManageWithStore(data) {
+export function getOrderListByStore(data) {
   return request({
     url: '/api/bgms/order/find2ManageWithStore',
     method: 'post',

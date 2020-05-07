@@ -45,79 +45,79 @@ export const constantRoutes = [
 
   {
     path: '/',
-    redirect: '/order'
+    redirect: '/order-manage'
   },
 
   {
-    path: '/order',
-    redirect: '/order/wash'
+    path: '/order-manage',
+    redirect: '/order-manage/wash'
   },
 
   {
-    path: '/order/wash',
+    path: '/order-manage/wash',
     component: Layout,
-    name: 'order.wash',
-    redirect: '/order/wash/all',
-    meta: { title: '洗鞋订单', icon: 'form', routeable: true },
+    name: 'orderManage.wash',
+    redirect: '/order-manage/wash/all',
+    meta: { title: '洗鞋订单', icon: 'form', routeable: true, code: 'ORDER_MANAGE' },
     children: [
       {
         path: 'all',
-        name: 'order.wash.all',
+        name: 'orderManage.wash.all',
         component: () => import('@/views/orderWash/orderList.all'),
-        meta: { title: '全部', routeable: true }
+        meta: { title: '全部', routeable: true, code: 'ORDER_MANAGE_ALL' }
       },
       {
         path: 'waitCustomerPay',
-        name: 'order.wash.waitCustomerPay',
+        name: 'orderManage.wash.waitCustomerPay',
         component: () => import('@/views/orderWash/orderList.waitCustomerPay'),
-        meta: { title: '待支付', routeable: true }
+        meta: { title: '待支付', routeable: true, code: 'ORDER_MANAGE_WAIT_PAY' }
       },
       {
         path: 'waitCustomerSend',
-        name: 'order.wash.waitCustomerSend',
+        name: 'orderManage.wash.waitCustomerSend',
         component: () => import('@/views/orderWash/orderList.waitCustomerSend'),
-        meta: { title: '待客户寄鞋', routeable: true }
+        meta: { title: '待客户寄鞋', routeable: true, code: 'ORDER_MANAGE_WAIT_EX' }
       },
       {
         path: 'waitReceipt',
-        name: 'order.wash.waitReceipt',
+        name: 'orderManage.wash.waitReceipt',
         component: () => import('@/views/orderWash/orderList.waitReceipt'),
-        meta: { title: '待接收', routeable: true }
+        meta: { title: '待接收', routeable: true, code: 'ORDER_MANAGE_WAIT_RECV' }
       },
       {
         path: 'doWash',
-        name: 'order.wash.doWash',
+        name: 'orderManage.wash.doWash',
         component: () => import('@/views/orderWash/orderList.doWash'),
-        meta: { title: '处理中', routeable: true }
+        meta: { title: '处理中', routeable: true, code: 'ORDER_MANAGE_PROING' }
       },
       {
         path: 'waitCustomerReceipt',
-        name: 'order.wash.waitCustomerReceipt',
+        name: 'orderManage.wash.waitCustomerReceipt',
         component: () => import('@/views/orderWash/orderList.waitCustomerReceipt'),
-        meta: { title: '待客户收鞋', routeable: true }
+        meta: { title: '待客户收鞋', routeable: true, code: 'ORDER_MANAGE_WAIT_OVER' }
       },
       {
         path: 'detail',
-        name: 'order.wash.detail',
+        name: 'orderManage.wash.detail',
         component: () => import('@/views/orderWash/orderDetail'),
-        meta: { title: '详情', routeable: true },
+        meta: { title: '详情', routeable: false },
         hidden: true
       }
     ]
   },
 
   {
-    path: '/goodz',
+    path: '/goodz-manage',
     component: Layout,
-    name: 'goodz',
-    redirect: '/goodz/list',
-    meta: { title: '商品管理', icon: 'dashboard', routeable: true },
+    name: 'goodzManage',
+    redirect: '/goodz-manage/list',
+    meta: { title: '商品管理', icon: 'dashboard', routeable: true, code: 'GOODZ_MANAGE' },
     children: [
       {
         path: 'list',
-        name: 'goodz.list',
+        name: 'goodzManage.list',
         component: () => import('@/views/goodzManage/goodz-list'),
-        meta: { title: '商品管理', routeable: true }
+        meta: { title: '商品管理', routeable: true, code: 'GOODZ_MANAGE' }
       }
     ]
   },
@@ -126,20 +126,20 @@ export const constantRoutes = [
     path: '/financial-manage',
     component: Layout,
     name: 'financialManage',
-    redirect: '/financial-manage/user',
-    meta: { title: '财务管理', icon: 'nested', routeable: true },
+    redirect: '/financial-manage/platform',
+    meta: { title: '财务管理', icon: 'nested', routeable: true, code: 'FUND_MANAGE' },
     children: [
       {
         path: 'platform',
         name: 'financialManage.platform',
         component: () => import('@/views/financialManage/financial-platform'),
-        meta: { title: '平台流水', routeable: true }
+        meta: { title: '平台流水', routeable: true, code: 'FUND_LOG_PLATFORM' }
       },
       {
         path: 'store',
         name: 'financialManage.store',
         component: () => import('@/views/financialManage/financial-store'),
-        meta: { title: '店铺流水', routeable: true }
+        meta: { title: '店铺流水', routeable: true, code: 'FUND_LOG_STORE' }
       }
     ]
   },
@@ -149,25 +149,25 @@ export const constantRoutes = [
     component: Layout,
     name: 'systemManage',
     redirect: '/system-manage/user',
-    meta: { title: '系统管理', icon: 'tree', routeable: true },
+    meta: { title: '系统管理', icon: 'tree', routeable: true, code: 'SYSTEM_MANAGE' },
     children: [
       {
         path: 'user',
         name: 'systemManage.user',
         component: () => import('@/views/systemManage/user-manage'),
-        meta: { title: '用户管理', routeable: true }
+        meta: { title: '用户管理', routeable: true, code: 'USER_MANAGE' }
       },
       {
         path: 'role',
         name: 'systemManage.role',
         component: () => import('@/views/systemManage/role-manage'),
-        meta: { title: '角色管理', routeable: true }
+        meta: { title: '角色管理', routeable: true, code: 'ROLE_MANAGE' }
       },
       {
         path: 'store',
         name: 'systemManage.store',
         component: () => import('@/views/systemManage/store-manage'),
-        meta: { title: '店铺管理', routeable: true }
+        meta: { title: '店铺管理', routeable: true, code: 'STORE_MANAGE' }
       }
     ]
   },

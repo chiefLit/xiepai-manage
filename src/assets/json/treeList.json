@@ -1,0 +1,456 @@
+{
+  "code": 1,
+  "message": "成功!",
+  "object": [
+    {
+      "id": 23,
+      "parentId": 0,
+      "parentCode": null,
+      "parentName": null,
+      "code": "SYSTEM_MANAGE",
+      "name": "系统管理",
+      "type": 0,
+      "permissionUrl": null,
+      "children": [
+        {
+          "id": 28,
+          "parentId": 23,
+          "parentCode": "SYSTEM_MANAGE",
+          "parentName": "系统管理",
+          "code": "USER_MANAGE",
+          "name": "用户管理",
+          "type": 0,
+          "permissionUrl": null,
+          "children": [
+            {
+              "id": 3,
+              "parentId": 28,
+              "parentCode": "USER_MANAGE",
+              "parentName": "用户管理",
+              "code": "USER_LIST",
+              "name": "用户列表",
+              "type": 2,
+              "permissionUrl": "/api/bgms/user/list",
+              "children": []
+            },
+            {
+              "id": 4,
+              "parentId": 28,
+              "parentCode": "USER_MANAGE",
+              "parentName": "用户管理",
+              "code": "USER_CREATE",
+              "name": "创建用户",
+              "type": 1,
+              "permissionUrl": "/api/bgms/user/create",
+              "children": []
+            },
+            {
+              "id": 5,
+              "parentId": 28,
+              "parentCode": "USER_MANAGE",
+              "parentName": "用户管理",
+              "code": "USER_UPDATE",
+              "name": "修改用户",
+              "type": 1,
+              "permissionUrl": "/api/bgms/user/update",
+              "children": []
+            },
+            {
+              "id": 6,
+              "parentId": 28,
+              "parentCode": "USER_MANAGE",
+              "parentName": "用户管理",
+              "code": "USER_USER_RESETPWD",
+              "name": "重置密码",
+              "type": 1,
+              "permissionUrl": "/api/bgms/user/restPassword",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 29,
+          "parentId": 23,
+          "parentCode": "SYSTEM_MANAGE",
+          "parentName": "系统管理",
+          "code": "ROLE_MANAGE",
+          "name": "角色管理",
+          "type": 0,
+          "permissionUrl": null,
+          "children": [
+            {
+              "id": 7,
+              "parentId": 29,
+              "parentCode": "ROLE_MANAGE",
+              "parentName": "角色管理",
+              "code": "ROLE_LIST",
+              "name": "角色列表",
+              "type": 2,
+              "permissionUrl": "/api/bgms/role/list",
+              "children": []
+            },
+            {
+              "id": 41,
+              "parentId": 29,
+              "parentCode": "ROLE_MANAGE",
+              "parentName": "角色管理",
+              "code": "ROLE_DETAIL",
+              "name": "角色详情",
+              "type": 2,
+              "permissionUrl": "/api/bgms/role/detail",
+              "children": []
+            },
+            {
+              "id": 42,
+              "parentId": 29,
+              "parentCode": "ROLE_MANAGE",
+              "parentName": "角色管理",
+              "code": "ROLE_UPDATE",
+              "name": "修改角色",
+              "type": 1,
+              "permissionUrl": "/api/bgms/role/update",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "parentId": 23,
+          "parentCode": "SYSTEM_MANAGE",
+          "parentName": "系统管理",
+          "code": "EXP_COMPANY_LIST",
+          "name": "快递公司列表",
+          "type": 2,
+          "permissionUrl": "/api/bgms/express_company/list",
+          "children": []
+        },
+        {
+          "id": 44,
+          "parentId": 23,
+          "parentCode": "SYSTEM_MANAGE",
+          "parentName": "系统管理",
+          "code": "MENU_MANAGE",
+          "name": "菜单管理",
+          "type": 0,
+          "permissionUrl": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "parentId": 0,
+      "parentCode": null,
+      "parentName": null,
+      "code": "ORDER_MANAGE",
+      "name": "订单管理",
+      "type": 0,
+      "permissionUrl": null,
+      "children": [
+        {
+          "id": 31,
+          "parentId": 24,
+          "parentCode": "ORDER_MANAGE",
+          "parentName": "订单管理",
+          "code": "ORDER_MANAGE_PLATFORM",
+          "name": "平台订单",
+          "type": 0,
+          "permissionUrl": null,
+          "children": [
+            {
+              "id": 11,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_PLATFORM",
+              "name": "平台订单",
+              "type": 2,
+              "permissionUrl": "/api/bgms/order/find2Manage",
+              "children": []
+            },
+            {
+              "id": 13,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_DETAIL",
+              "name": "订单详情",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/detail",
+              "children": []
+            },
+            {
+              "id": 14,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_CANCEL",
+              "name": "取消订单",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/cancel",
+              "children": []
+            },
+            {
+              "id": 15,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_COLLECT",
+              "name": "收鞋核验",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/store-collect",
+              "children": []
+            },
+            {
+              "id": 16,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_RESULT",
+              "name": "服务完成",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/service-result",
+              "children": []
+            },
+            {
+              "id": 17,
+              "parentId": 31,
+              "parentCode": "ORDER_MANAGE_PLATFORM",
+              "parentName": "平台订单",
+              "code": "ORDER_EX_LOG",
+              "name": "物流记录",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/find-order-express-log",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "parentId": 24,
+          "parentCode": "ORDER_MANAGE",
+          "parentName": "订单管理",
+          "code": "ORDER_MANAGE_STORE",
+          "name": "门店订单",
+          "type": 0,
+          "permissionUrl": null,
+          "children": [
+            {
+              "id": 12,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_STORE",
+              "name": "门店订单",
+              "type": 2,
+              "permissionUrl": "/api/bgms/order/find2ManageWithStore",
+              "children": []
+            },
+            {
+              "id": 33,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_DETAIL_STORE",
+              "name": "订单详情",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/detail",
+              "children": []
+            },
+            {
+              "id": 34,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_CANCEL_STORE",
+              "name": "取消订单",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/cancel",
+              "children": []
+            },
+            {
+              "id": 35,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_COLLECT_STORE",
+              "name": "收鞋核验",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/store-collect",
+              "children": []
+            },
+            {
+              "id": 36,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_RESULT_STORE",
+              "name": "服务完成",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/service-result",
+              "children": []
+            },
+            {
+              "id": 37,
+              "parentId": 32,
+              "parentCode": "ORDER_MANAGE_STORE",
+              "parentName": "门店订单",
+              "code": "ORDER_EX_LOG_STORE",
+              "name": "物流记录",
+              "type": 1,
+              "permissionUrl": "/api/bgms/order/find-order-express-log",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "parentId": 0,
+      "parentCode": null,
+      "parentName": null,
+      "code": "GOODZ_MANAGE",
+      "name": "商品管理",
+      "type": 0,
+      "permissionUrl": null,
+      "children": [
+        {
+          "id": 8,
+          "parentId": 25,
+          "parentCode": "GOODZ_MANAGE",
+          "parentName": "商品管理",
+          "code": "GOODZ_LIST",
+          "name": "商品列表",
+          "type": 2,
+          "permissionUrl": "/api/bgms/goodz/find",
+          "children": []
+        },
+        {
+          "id": 9,
+          "parentId": 25,
+          "parentCode": "GOODZ_MANAGE",
+          "parentName": "商品管理",
+          "code": "GOODZ_DETAIL",
+          "name": "商品明细",
+          "type": 2,
+          "permissionUrl": "/api/bgms/goodz/detail",
+          "children": []
+        },
+        {
+          "id": 10,
+          "parentId": 25,
+          "parentCode": "GOODZ_MANAGE",
+          "parentName": "商品管理",
+          "code": "GOODZ_UPDATE",
+          "name": "修改商品",
+          "type": 1,
+          "permissionUrl": "/api/bgms/goodz/update",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "parentId": 0,
+      "parentCode": null,
+      "parentName": null,
+      "code": "STORE_MANAGE",
+      "name": "门店管理",
+      "type": 0,
+      "permissionUrl": null,
+      "children": [
+        {
+          "id": 18,
+          "parentId": 26,
+          "parentCode": "STORE_MANAGE",
+          "parentName": "门店管理",
+          "code": "STORE_LIST",
+          "name": "门店列表",
+          "type": 2,
+          "permissionUrl": "/api/bgms/store/list",
+          "children": []
+        },
+        {
+          "id": 19,
+          "parentId": 26,
+          "parentCode": "STORE_MANAGE",
+          "parentName": "门店管理",
+          "code": "STORE_DETAIL",
+          "name": "门店详情",
+          "type": 1,
+          "permissionUrl": "/api/bgms/store/detail",
+          "children": []
+        },
+        {
+          "id": 20,
+          "parentId": 26,
+          "parentCode": "STORE_MANAGE",
+          "parentName": "门店管理",
+          "code": "STORE_UPDATE",
+          "name": "修改门店",
+          "type": 1,
+          "permissionUrl": "/api/bgms/store/update",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "parentId": 0,
+      "parentCode": null,
+      "parentName": null,
+      "code": "FUND_MANAGE",
+      "name": "财务管理",
+      "type": 0,
+      "permissionUrl": null,
+      "children": [
+        {
+          "id": 21,
+          "parentId": 27,
+          "parentCode": "FUND_MANAGE",
+          "parentName": "财务管理",
+          "code": "FUND_LOG_PLATFORM_LIST",
+          "name": "平台流水列表",
+          "type": 2,
+          "permissionUrl": "/api/bgms/fundlog/find_platform",
+          "children": []
+        },
+        {
+          "id": 22,
+          "parentId": 27,
+          "parentCode": "FUND_MANAGE",
+          "parentName": "财务管理",
+          "code": "FUND_LOG_STORE_LIST",
+          "name": "门店流水列表",
+          "type": 2,
+          "permissionUrl": "/api/bgms/fundlog/find_store",
+          "children": []
+        },
+        {
+          "id": 38,
+          "parentId": 27,
+          "parentCode": "FUND_MANAGE",
+          "parentName": "财务管理",
+          "code": "FUND_LOG_PLATFORM",
+          "name": "平台流水列表",
+          "type": 0,
+          "permissionUrl": "",
+          "children": []
+        },
+        {
+          "id": 39,
+          "parentId": 27,
+          "parentCode": "FUND_MANAGE",
+          "parentName": "财务管理",
+          "code": "FUND_LOG_STORE",
+          "name": "门店流水列表",
+          "type": 0,
+          "permissionUrl": "",
+          "children": []
+        }
+      ]
+    }
+  ],
+  "map": {}
+}
